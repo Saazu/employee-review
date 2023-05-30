@@ -4,14 +4,17 @@ import MainLayout from '../../layouts/MainLayout'
 import User from '../../components/User'
 import Button from '../../components/Button'
 import styles from './giveFeedback.module.css'
+import { useHistory } from 'react-router-dom'
 
 const GiveFeedback = () => {
   const users = React.useContext(UserContext)
+  const { push } = useHistory()
 
   return (
     <MainLayout loggedIn>
       <div className={styles.wrapper}>
         <h1>Share Feedback</h1>
+
         {users && users.length > 0 && (
           <ul className={styles.users}>
             {users.map((user) => (
@@ -21,6 +24,7 @@ const GiveFeedback = () => {
                 <Button
                   onClick={() => {
                     console.log('Fill out', user)
+                    push('/share-feedback/new', { user: user })
                   }}
                 >
                   Fill out

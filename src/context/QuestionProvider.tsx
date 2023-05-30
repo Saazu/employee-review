@@ -7,7 +7,10 @@ export type QuestionT = {
   label: string
 }
 
-export type Question2T = QuestionT & {
+export type Question2T = {
+  id: string
+  required: boolean
+  label: string
   type: 'multipleChoice'
   options: {
     label: string
@@ -19,7 +22,9 @@ type DispatchQuestionContextT = any
 
 export const DispatchQuestionContext =
   React.createContext<DispatchQuestionContextT | null>(null)
-export const QuestionContext = React.createContext<QuestionT[] | null>(null)
+export const QuestionContext = React.createContext<(QuestionT | Question2T)[]>(
+  [],
+)
 
 type SetQuestionsT = {
   action: 'set'
@@ -27,9 +32,9 @@ type SetQuestionsT = {
 }
 
 const reducer = (
-  state: QuestionT[] | null,
+  state: (QuestionT | Question2T)[],
   update: SetQuestionsT,
-): QuestionT[] | null => {
+): (QuestionT | Question2T)[] => {
   if (update.action === 'set') {
     return update.payload
   }

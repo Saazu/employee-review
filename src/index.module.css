@@ -11,6 +11,8 @@
   --primaryColor: #AB61E5;
   --primaryLightColor: #faf5ff;
   --primaryMediumColor: #e7e2f8;
+  --disabledColor: #ACB1B6;
+
 
   /* TYPOGRAPHY */
   --font-family: sans-serif;
@@ -19,9 +21,11 @@
   --fs-sm: 0.75rem;
   --fs-xl: 1.75rem;
   --fs-xxl: 2rem;
+  --fs-xxxl: 2.5rem;
   --fw-extrabold: 900;
   --fw-bold: 700;
   --fw-medium: 500;
+  --fw-normal: 400;
   --fw-regular: 300;
   --fw-semibold: 600;
   --lineHeight: 1.2;

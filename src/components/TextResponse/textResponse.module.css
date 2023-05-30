@@ -1,0 +1,15 @@
+.input {
+  width: 100%;
+  min-height: 230px;
+  margin: var(--fs-base) 0rem;
+  border: 1px solid var(--lightGrey);
+  border-radius: 3px;
+  padding: var(--fs-base);
+  font-family: 'Open Sans';
+  font-size: var(--fs-base);
+  line-height: var(--fs-l);
+}
+
+.input:focus {
+  border: 1px solid var(--lightGrey);
+}

@@ -1,0 +1,8 @@
+.option {
+  font-size: var(--fs-base);
+  line-height: var(--fs-l);
+  font-weight: var(--fw-normal);
+  background-color: var(--lightGrey);
+  padding: 20px 30px;
+  cursor: pointer;
+}

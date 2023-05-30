@@ -1,0 +1,19 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.box {
+  background-color: var(--primaryColor);
+  border: 1px solid var(--primaryColor);
+  height: 74px;
+  width: 74px;
+  margin: 0rem 2px;
+  cursor: pointer;
+}
+
+.box:hover {
+  background-color: var(--disabledColor);
+  border: 1px solid var(--disabledColor);
+}
