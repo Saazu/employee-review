@@ -1,8 +1,18 @@
+.container {
+  width: 100%;
+}
+
 .option {
   font-size: var(--fs-base);
   line-height: var(--fs-l);
   font-weight: var(--fw-normal);
-  background-color: var(--lightGrey);
   padding: 20px 30px;
   cursor: pointer;
+  border-radius: 3px;
+  
+}
+
+.option:hover {
+  background-color: var(--darkGrey) !important;
+  color: var(--white) !important;
 }

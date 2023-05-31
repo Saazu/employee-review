@@ -1,5 +1,5 @@
 type Props = {
-  color: string
+  color?: string
   completed: number
   total: number
 }
@@ -18,7 +18,7 @@ const ProgressBar = (props: Props) => {
   const fillerStyles = {
     height: '100%',
     width: `${(completed / total) * 100}%`,
-    backgroundImage: `linear-gradient(100%, #1DDEBB, #98FFFB)`,
+    backgroundImage: color ? color : `linear-gradient(#1DDEBB, #98FFFB)`,
     borderRadius: 'inherit',
   }
 

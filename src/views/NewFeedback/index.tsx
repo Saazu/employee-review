@@ -1,34 +1,48 @@
 import * as React from 'react'
 import MainLayout from '../../layouts/MainLayout'
 import User from '../../components/User'
+import { UserT } from '../../context/types'
 import styles from './newFeedback.module.css'
-// import { QuestionContext } from '../../context/QuestionProvider'
+import { QuestionContext } from '../../context/QuestionProvider'
 import { useLocation, useHistory } from 'react-router-dom'
 import MultipleChoiceQuestion from '../../components/MultipleChoiceQuestion/MultipleChoiceQuestion'
 import Scale from '../../components/Scale/Scale'
 import Button from '../../components/Button/Button'
 import TextResponse from '../../components/TextResponse/TextResponse'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
+import useGiveFeedbackWizard from '../../hooks/useGiveFeedbackWizard'
 
 type LocationState = {
-  user: {
-    id: string
-    name: string
-    avatarUrl: string
-  }
+  giver: UserT
+  receiver: UserT
 }
 
 const NewFeedback = () => {
-  // const questions = React.useContext(QuestionContext)
+  const questions = React.useContext(QuestionContext)
   const { state } = useLocation<LocationState>()
-  const { name, avatarUrl } = state.user
-  const [response, setResponse] = React.useState('')
+  const { giver, receiver } = state
   const { push } = useHistory()
+  const {
+    currentQuestion,
+    goToNextQuestion,
+    goToPreviousQuestion,
+    saveResponse,
+    responses,
+    setResponses,
+    numWizardSteps,
+    currentQuestionIndex,
+  } = useGiveFeedbackWizard(giver, receiver, questions)
 
-  function setText(event: Event) {
-    const target = event.currentTarget as HTMLInputElement
-    setResponse(target.value)
-  }
+  console.log({
+    currentQuestion,
+    goToNextQuestion,
+    goToPreviousQuestion,
+    saveResponse,
+    responses,
+    setResponses,
+    numWizardSteps,
+    currentQuestionIndex,
+  })
 
   return (
     <MainLayout loggedIn>
@@ -42,38 +56,66 @@ const NewFeedback = () => {
           </div>
           <div className={styles.header}>
             <div>
-              <h2 className={styles.question}>
-                How well did I display courage?
-              </h2>
+              <h2 className={styles.question}>{currentQuestion.label}</h2>
               <p className={styles.subTitle}>
-                SHARE YOUR FEEDBACK FOR {name.toUpperCase()}
+                SHARE YOUR FEEDBACK FOR {receiver.name.toUpperCase()}
               </p>
             </div>
             <div>
-              <User name={name} avatarUrl={avatarUrl} displayName={false} />
+              <User
+                name={receiver.name}
+                avatarUrl={receiver.avatarUrl}
+                displayName={false}
+              />
             </div>
           </div>
           <div className={styles.responseContainer}>
-            <MultipleChoiceQuestion
-              onOptionSelect={(e) => console.log('Selected', e)}
-            />
-            <Scale onSelectScore={(value) => console.log(value)} />
-            <TextResponse response={response} />
+            <div className={styles.responseInput}>
+              {currentQuestion.type === 'multipleChoice' && (
+                <MultipleChoiceQuestion
+                  options={currentQuestion.options}
+                  onOptionSelect={(e) => console.log('Selected', e)}
+                />
+              )}
+              <div className={styles.scaleInputContainer}>
+                {currentQuestion.type === 'scale' && (
+                  <Scale onSelectScore={(value) => console.log(value)} />
+                )}
+              </div>
+
+              {currentQuestion.type === 'text' && (
+                <div className={styles.textResponseContainer}>
+                  <TextResponse
+                    handleResponseChange={() => console.log('New stuff')}
+                  />
+                </div>
+              )}
+            </div>
+
             <div className={styles.navigation}>
-              <Button secondary onClick={() => console.log('Previous')}>
+              <Button secondary onClick={goToPreviousQuestion}>
                 Previous
               </Button>
-              <Button secondary onClick={() => console.log('Skip')}>
+              <Button
+                disabled={currentQuestion.required}
+                secondary
+                onClick={goToNextQuestion}
+              >
                 Skip
               </Button>
-              <Button secondary onClick={() => console.log('Next')}>
+              <Button secondary onClick={goToNextQuestion}>
                 Next
               </Button>
             </div>
-            <ProgressBar color={'#1DDEBB'} completed={2} total={9} />
+            <ProgressBar
+              completed={currentQuestionIndex + 1}
+              total={numWizardSteps}
+            />
             <div>
               <p>QUESTIONS ANSWERED</p>
-              <p>1/9</p>
+              <p>
+                {currentQuestionIndex + 1}/{numWizardSteps}
+              </p>
             </div>
           </div>
         </div>

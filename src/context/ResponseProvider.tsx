@@ -1,4 +1,11 @@
 import * as React from 'react'
+import { UserT } from './types'
+
+export type Responses = {
+  giver: UserT
+  receiver: UserT
+  responses: (ResponseT | Response2T)[]
+}
 
 export type ResponseT = {
   id: string

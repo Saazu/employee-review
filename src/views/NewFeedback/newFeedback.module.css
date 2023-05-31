@@ -28,6 +28,20 @@
   text-transform: uppercase;
 }
 
+.responseInput {
+  min-height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .responseInput {
+      flex-direction: column;
+      min-height: auto;
+  }
+}
+
 .navigation {
   display: flex;
   justify-content: space-between;
@@ -41,10 +55,18 @@
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
 }
 
+.scaleInputContainer {
+  
+}
+
+.textResponseContainer {
+  width: 100%
+}
+
 .backButton {
   font-weight: var(--fw-bold);
   font-size: var(--fs-sm);
   line-height: var( --fs-base);
-  color: #59636E;
+  color: var(--darkGrey);
   cursor: pointer;
 }

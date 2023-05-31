@@ -1,8 +1,10 @@
 :root {
   --lightGrey: #F2F3F4;
+  --darkGrey: #59636E;
   /* COLORS */
   --white: #FFFFFF;
   --black: #000000;
+  --offBlack: #031323;
   --accentColor: #201d29;
   --borderColor: #D6D6D6;
   --copyColor: #333333;

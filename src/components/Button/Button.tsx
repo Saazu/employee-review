@@ -10,7 +10,7 @@ type Props = {
 }
 
 const Button = (props: Props) => {
-  const { children, secondary, onClick, disabled } = props
+  const { children, secondary, onClick, disabled = false } = props
 
   return (
     <button

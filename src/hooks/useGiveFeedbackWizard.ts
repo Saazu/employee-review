@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { UserT } from '../context/types'
 
-function useGiveFeedbackWizard(giver: UserT, receiver: UserT, questions: []) {
+function useGiveFeedbackWizard(giver: UserT, receiver: UserT, questions: any) {
   const [responses, setResponses] = React.useState<(string | number)[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] =
     React.useState<number>(0)
@@ -9,13 +9,13 @@ function useGiveFeedbackWizard(giver: UserT, receiver: UserT, questions: []) {
 
   function goToNextQuestion() {
     if (currentQuestionIndex !== questions.length - 1) {
-      setCurrentQuestionIndex((prevValue) => prevValue + 1)
+      setCurrentQuestionIndex(currentQuestionIndex + 1)
     }
   }
 
   function goToPreviousQuestion() {
     if (currentQuestionIndex !== 0) {
-      setCurrentQuestionIndex((prevValue) => prevValue - 1)
+      setCurrentQuestionIndex(currentQuestionIndex - 1)
     }
   }
 
@@ -34,6 +34,7 @@ function useGiveFeedbackWizard(giver: UserT, receiver: UserT, questions: []) {
     responses,
     setResponses,
     numWizardSteps: questions.length,
+    currentQuestionIndex,
   }
 }
 

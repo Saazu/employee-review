@@ -5,10 +5,12 @@ import User from '../../components/User'
 import Button from '../../components/Button'
 import styles from './giveFeedback.module.css'
 import { useHistory } from 'react-router-dom'
+import { AccountContext } from '../../context/AccountProvider'
 
 const GiveFeedback = () => {
   const users = React.useContext(UserContext)
   const { push } = useHistory()
+  const currentUser = React.useContext(AccountContext)
 
   return (
     <MainLayout loggedIn>
@@ -24,7 +26,10 @@ const GiveFeedback = () => {
                 <Button
                   onClick={() => {
                     console.log('Fill out', user)
-                    push('/share-feedback/new', { user: user })
+                    push('/share-feedback/new', {
+                      giver: currentUser,
+                      receiver: user,
+                    })
                   }}
                 >
                   Fill out

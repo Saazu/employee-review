@@ -1,7 +1,9 @@
+import * as React from 'react'
 import styles from './multipleChoiceQuestion.module.css'
 
 type Props = {
-  options?: {
+  selectedValue?: number
+  options: {
     label: string
     value: number
   }[]
@@ -9,25 +11,49 @@ type Props = {
 }
 
 const MultipleChoiceQuestion = (props: Props) => {
-  const { onOptionSelect } = props
+  const { onOptionSelect, options, selectedValue } = props
+  const [selectedOption, setSelectedOption] = React.useState<number>(
+    selectedValue ? selectedValue : 0,
+  )
+  console.log({ options })
+
+  function handleOptionSelection(value: number) {
+    onOptionSelect(value)
+    setSelectedOption(value)
+    console.log('selected', value)
+  }
+
+  const backgroundColor = (value: number) => {
+    if (selectedOption === 0) {
+      return ' --lightGrey'
+    } else {
+      return selectedOption === value ? '--darkGrey' : '--lightGrey'
+    }
+  }
+
+  const textColor = (value: number) => {
+    if (selectedOption === 0) {
+      return '--offBlack'
+    } else {
+      return selectedOption === value ? '--white' : '--offBlack'
+    }
+  }
 
   return (
-    <div>
-      <p className={styles.option} onClick={() => onOptionSelect(1)} key={1}>
-        Please Improve You may have done one or the following: Maybe you were
-        mostly quiet in meetings and when you had something on your mind, you
-        brought it to the team afterward. Or, you had feedback that would be
-        valuable to go, but you found it too difficult. Or, you had an
-        opportunity to grow by doing something uncomfortable but you didn’t.
-      </p>
-      <p className={styles.option} onClick={() => onOptionSelect(1)} key={2}>
-        You Were Good You sometimes participate in meetings but you feel that
-        they don’t always bring up important things when they should.{' '}
-      </p>
-      <p className={styles.option} onClick={() => onOptionSelect(1)} key={3}>
-        You Were Great I and others can count on your courage to help the team
-        do what is right.
-      </p>
+    <div className={styles.container}>
+      {options.map((option, i) => (
+        <p
+          style={{
+            backgroundColor: `var(${backgroundColor(i + 1)})`,
+            color: `var(${textColor(i + 1)})`,
+          }}
+          key={option.value}
+          className={styles.option}
+          onClick={() => handleOptionSelection(i + 1)}
+        >
+          {option.label}
+        </p>
+      ))}
     </div>
   )
 }

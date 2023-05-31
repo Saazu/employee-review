@@ -23,6 +23,12 @@
   border: 1px solid var(--disabledColor);
 }
 
+.button:disabled:hover {
+  background-color: var(--disabledColor);
+  color: var(--white);
+  border: 1px solid var(--disabledColor);
+}
+
 .secondaryButton {
   background-color: transparent;
   border-color: var(--borderColor);

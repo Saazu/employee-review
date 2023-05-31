@@ -1,20 +1,54 @@
+import * as React from 'react'
 import styles from './scale.module.css'
 
 type Props = {
   maxValue?: number
+  selectedScore?: number
   onSelectScore: (score: number) => void
 }
 
 const Scale = (props: Props) => {
-  const { maxValue = 10, onSelectScore } = props
+  const { maxValue = 10, onSelectScore, selectedScore } = props
+  const [scoreHoverOn, setScoreHoverOn] = React.useState<number>(0)
+  const [currentScore, setCurrentScore] = React.useState<number>(
+    selectedScore ? selectedScore : 0,
+  )
+
+  function handleHover(event: React.MouseEvent<HTMLButtonElement>) {
+    setScoreHoverOn(Number(event.currentTarget.value) + 1)
+  }
+
+  function handleMouseLeave() {
+    setScoreHoverOn(0)
+  }
+
+  function handleScoreSelect(value: number) {
+    setCurrentScore(value)
+    onSelectScore(value)
+  }
+
+  const backGroundColor = (value: number) => {
+    if (currentScore) {
+      return currentScore > value - 1 ? '--primaryColor' : '--disabledColor'
+    } else if (scoreHoverOn > 0) {
+      return scoreHoverOn > value - 1 ? '--primaryColor' : '--disabledColor'
+    } else {
+      return '--disabledColor'
+    }
+  }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} onMouseLeave={handleMouseLeave}>
       {new Array(maxValue).fill(0).map((_, i) => (
         <button
-          onClick={() => onSelectScore(i)}
+          style={{
+            backgroundColor: `var(${backGroundColor(i + 1)})`,
+            border: `1px solid var(${backGroundColor(i + 1)})`,
+          }}
+          onMouseOver={handleHover}
+          onClick={() => handleScoreSelect(i + 1)}
           value={i}
-          key={i}
+          key={i + 1}
           className={styles.box}
         ></button>
       ))}
