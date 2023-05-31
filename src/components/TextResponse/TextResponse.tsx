@@ -19,7 +19,7 @@ const TextResponse = (props: Props) => {
     setResponsetext(updatedText)
     const newResponse: NewAnswer = {
       type: 'text',
-      answer: updatedText,
+      answer: updatedText.trim(),
     }
     handleResponseChange(newResponse)
   }

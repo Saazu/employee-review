@@ -117,3 +117,15 @@
   font-size: var(--fs-xxl);
   line-height: var(--fs-xxxl);
 }
+
+.skipTag {
+  background: #ACB1B6;
+  border-radius: 3px;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  color: var(--white);
+}

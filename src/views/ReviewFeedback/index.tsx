@@ -75,7 +75,7 @@ const ReviewFeedback = () => {
                           {
                             question.options[
                               Number(
-                                selectedSubmission?.responses[index].answer,
+                                selectedSubmission?.responses[index]?.answer,
                               )
                             ]?.label
                           }
@@ -88,7 +88,7 @@ const ReviewFeedback = () => {
                             viewOnly={true}
                             onSelectScore={() => console.log('Nein')}
                             selectedScore={Number(
-                              selectedSubmission?.responses[index].answer,
+                              selectedSubmission?.responses[index]?.answer,
                             )}
                           />
                         )}
@@ -96,8 +96,12 @@ const ReviewFeedback = () => {
 
                       {question.type === 'text' && (
                         <div className={styles.textResponseContainer}>
-                          <>{selectedSubmission?.responses[index].answer}</>
+                          <>{selectedSubmission?.responses[index]?.answer}</>
                         </div>
+                      )}
+
+                      {selectedSubmission?.responses[index] === null && (
+                        <span className={styles.skipTag}>SKIPPED</span>
                       )}
                     </div>
                   </li>
