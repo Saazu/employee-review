@@ -43,6 +43,14 @@ const NewFeedback = () => {
     }
   }
 
+  function handleSkipClick() {
+    saveResponse(currentQuestionIndex, {
+      type: currentQuestion.type,
+      answer: 'skipped',
+    })
+    goToNextQuestion()
+  }
+
   function saveAnswer(newResponse: NewAnswer) {
     saveResponse(currentQuestionIndex, newResponse)
   }
@@ -107,7 +115,7 @@ const NewFeedback = () => {
                 <Button
                   disabled={currentQuestion.required}
                   secondary
-                  onClick={goToNextQuestion}
+                  onClick={handleSkipClick}
                 >
                   Skip
                 </Button>
@@ -115,7 +123,11 @@ const NewFeedback = () => {
               <Button
                 secondary
                 onClick={handleNextButtonClick}
-                disabled={responses[currentQuestionIndex] === null}
+                disabled={
+                  responses[currentQuestionIndex] === null ||
+                  responses[currentQuestionIndex]?.answer.toString().trim() ===
+                    ''
+                }
               >
                 Next
               </Button>
