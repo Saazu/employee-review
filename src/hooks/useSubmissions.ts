@@ -14,7 +14,7 @@ function useSubmissions() {
 
   const usersGivenFeedbackTo = allSumbissions.map((submission) => {
     if (submission.giver.id === currentUser?.id) {
-      return submission.giver.id
+      return submission.receiver.id
     }
   })
 

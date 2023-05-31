@@ -14,11 +14,13 @@ const SubmissionCompletion = () => {
   const currentUser = React.useContext(AccountContext)
   const { usersGivenFeedbackTo } = useSubmissions()
 
+  console.log({ usersGivenFeedbackTo })
+
   const usersToDisplay = users?.filter(
-    (user) =>
-      user.id !== currentUser?.id ||
-      !usersGivenFeedbackTo.includes(currentUser?.id),
+    (user) => !usersGivenFeedbackTo.includes(user?.id),
   )
+
+  console.log('Number to go', usersToDisplay?.length)
 
   return (
     <MainLayout loggedIn>
@@ -30,23 +32,25 @@ const SubmissionCompletion = () => {
 
         {usersToDisplay && usersToDisplay.length > 0 && (
           <ul className={styles.users}>
-            {usersToDisplay.map((user) => (
-              <li key={user.id} className={styles.user}>
-                <User name={user.name} avatarUrl={user.avatarUrl} />
-                <span style={{ flex: 1 }} />
-                <Button
-                  onClick={() => {
-                    console.log('Fill out', user)
-                    push('/share-feedback/new', {
-                      giver: currentUser,
-                      receiver: user,
-                    })
-                  }}
-                >
-                  Fill out
-                </Button>
-              </li>
-            ))}
+            {usersToDisplay
+              .filter((user) => user.id !== currentUser?.id)
+              .map((user) => (
+                <li key={user.id} className={styles.user}>
+                  <User name={user.name} avatarUrl={user.avatarUrl} />
+                  <span style={{ flex: 1 }} />
+                  <Button
+                    onClick={() => {
+                      console.log('Fill out', user)
+                      push('/share-feedback/new', {
+                        giver: currentUser,
+                        receiver: user,
+                      })
+                    }}
+                  >
+                    Fill out
+                  </Button>
+                </li>
+              ))}
           </ul>
         )}
       </div>
