@@ -1,3 +1,8 @@
+.mainContainer {
+  display: flex;
+  justify-content: center;
+}
+
 .feedbackContainer {
   border: var(--baseBorder);
   display: grid;

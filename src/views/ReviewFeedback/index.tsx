@@ -22,51 +22,50 @@ const ReviewFeedback = () => {
 
   return (
     <MainLayout loggedIn>
-      <NoFeedbacDisplay />
-      <NotFound />
+      <div className={styles.mainContainer}>
+        {feedBackGiven.length > 0 ? (
+          <>
+            <h1 className={styles.header}>My Feedback</h1>
 
-      {feedBackGiven.length > 0 ? (
-        <>
-          <h1 className={styles.header}>My Feedback</h1>
-
-          <div className={styles.feedbackContainer}>
-            <ul className={styles.users}>
-              <li>
-                <h3 className={styles.subHeading}>Feedback given</h3>
-              </li>
-              {feedBackGiven.map((feedBackGiven) => (
-                <li
-                  key={feedBackGiven.receiver.id}
-                  onClick={() =>
-                    viewTeamMemberSubmission(feedBackGiven.receiver)
-                  }
-                >
-                  <User
-                    name={feedBackGiven.receiver.name}
-                    avatarUrl={feedBackGiven.receiver.avatarUrl}
-                  />
+            <div className={styles.feedbackContainer}>
+              <ul className={styles.users}>
+                <li>
+                  <h3 className={styles.subHeading}>Feedback given</h3>
                 </li>
-              ))}
-            </ul>
+                {feedBackGiven.map((feedBackGiven) => (
+                  <li
+                    key={feedBackGiven.receiver.id}
+                    onClick={() =>
+                      viewTeamMemberSubmission(feedBackGiven.receiver)
+                    }
+                  >
+                    <User
+                      name={feedBackGiven.receiver.name}
+                      avatarUrl={feedBackGiven.receiver.avatarUrl}
+                    />
+                  </li>
+                ))}
+              </ul>
 
-            <ul className={styles.feedback}>
-              <li>
-                <h2 className={styles.feedbacSubHeading}>
-                  {selectedTeamMember?.name}'s Feedback
-                </h2>
-              </li>
-              {questions.map((question) => (
-                <li key={question.id}>
-                  <p className={styles.question}>{question.label}</p>
-                  <div className={styles.response}>{}</div>
+              <ul className={styles.feedback}>
+                <li>
+                  <h2 className={styles.feedbacSubHeading}>
+                    {selectedTeamMember?.name}'s Feedback
+                  </h2>
                 </li>
-              ))}
-            </ul>
-          </div>
-        </>
-      ) : (
-        <NoFeedbacDisplay />
-      )}
+                {questions.map((question) => (
+                  <li key={question.id}>
+                    <p className={styles.question}>{question.label}</p>
+                    <div className={styles.response}>{}</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
+        ) : (
+          <NoFeedbacDisplay />
+        )}
+      </div>
     </MainLayout>
   )
 }
