@@ -1,0 +1,131 @@
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  padding: 0rem 5rem
+}
+
+.feedbackContainer {
+  border: var(--baseBorder);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+}
+
+.subHeading {
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  line-height: var(--fs-base);
+/* identical to box height */
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--darkGrey);
+}
+
+.feedbackSubHeading {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-l);
+  line-height: var(--fs-xxxl);
+  color: var(--offBlack);
+  padding: 0rem 1rem;
+}
+
+.scaleInputContainer {
+  width: max-content;
+}
+
+.user {
+  color: var(--darkGrey);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.user:hover {
+  background-color: var(--lightPink);
+  color: var(--black);
+}
+
+.userSelected {
+  background-color: var(--lightGrey);
+}
+
+.responseDisplay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  line-height: 19px;
+  color: var(--black);
+  
+}
+
+.question {
+  width: 50%;
+  margin-right: 3rem;
+  padding: 0rem 1rem;
+  font-weight: var(--fw-semibold); 
+}
+
+.response {
+  width: 50%;
+  padding: 0rem 1rem;
+  font-weight: var(--fw-semibold) !important; 
+}
+
+.users,
+.feedback {
+  list-style-type: none;
+}
+
+.users {
+  border-right: var(--baseBorder);
+  min-height: 70vh;
+}
+
+.users li {
+  padding: 1rem;
+}
+
+.users h3,
+.feedback h2 {
+  margin: 0;
+}
+
+.feedback li {
+  padding: 1.5rem;
+}
+
+.feedback li:nth-child(1) {
+  border-bottom: none;
+}
+
+.feedback ul li:nth-child(1) {
+  border-top: none;
+}
+
+.users li,
+.feedback li {
+  border-bottom: var(--baseBorder);
+}
+
+.feedback li:last-child {
+  border-bottom: none;
+}
+
+.header {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-xxl);
+  line-height: var(--fs-xxxl);
+}
+
+.skipTag {
+  background: #ACB1B6;
+  border-radius: 3px;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  color: var(--white);
+}

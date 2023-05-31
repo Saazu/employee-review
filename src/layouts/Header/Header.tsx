@@ -32,6 +32,9 @@ const Header = () => {
       <NavLink exact to="/my-feedback" activeClassName={styles.active}>
         My Feedback
       </NavLink>
+      <NavLink exact to="/team-feedback" activeClassName={styles.active}>
+        Team Feeback
+      </NavLink>
       <span className={styles.spacer} />
       <NavLink exact to="/" onClick={handleLogout}>
         Logout {currentUser && `${currentUser.name}`}

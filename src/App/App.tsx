@@ -14,6 +14,7 @@ import PrivateRoute from '../components/Routing/PrivateRoute'
 import NewFeedback from '../views/NewFeedback'
 import { ResponseContext } from '../context/ResponseProvider'
 import SubmissionCompletion from '../views/SubmissionCompletion'
+import TeamFeedback from '../views/TeamFeedback'
 
 const App = () => {
   const currentUser = React.useContext(AccountContext)
@@ -47,9 +48,6 @@ const App = () => {
           <Route exact path="/">
             <Home />
           </Route>
-          <PrivateRoute isLoggedIn={isLoggedIn} exact path="/my-feedback">
-            <ReviewFeedback />
-          </PrivateRoute>
           <PrivateRoute isLoggedIn={isLoggedIn} exact path="/share-feedback">
             <GiveFeedback />
           </PrivateRoute>
@@ -59,6 +57,12 @@ const App = () => {
             path="/share-feedback/new"
           >
             <NewFeedback />
+          </PrivateRoute>
+          <PrivateRoute isLoggedIn={isLoggedIn} exact path="/my-feedback">
+            <ReviewFeedback />
+          </PrivateRoute>
+          <PrivateRoute isLoggedIn={isLoggedIn} exact path="/team-feedback">
+            <TeamFeedback />
           </PrivateRoute>
           <PrivateRoute
             isLoggedIn={isLoggedIn}
