@@ -5,6 +5,7 @@ import { AccountContext } from '../context/AccountProvider'
 function useSubmissions() {
   const currentUser = React.useContext(AccountContext)
   const allSumbissions = React.useContext(ResponseContext)
+
   const feedbackRecived = allSumbissions.filter(
     (submission) => submission.receiver.id === currentUser?.id,
   )
@@ -16,17 +17,26 @@ function useSubmissions() {
     (submission) => submission.receiver.id === currentUser?.id,
   )
 
-  const usersGivenFeedbackTo = allSumbissions.map((submission) => {
-    if (submission.giver.id === currentUser?.id) {
-      return submission.receiver.id
-    }
-  })
+  const usersGivenFeedbackTo = allSumbissions
+    .map((submission) => {
+      if (submission.giver.id === currentUser?.id) {
+        return submission.receiver.id
+      }
+      return null
+    })
+    .filter((user) => user !== null)
 
-  const usersReceivedFeedbackFrom = allSumbissions.map((submission) => {
-    if (submission.receiver.id === currentUser?.id) {
-      return submission.giver.id
-    }
-  })
+  console.log({ usersGivenFeedbackTo })
+
+  const usersReceivedFeedbackFrom = allSumbissions
+    .map((submission) => {
+      if (submission.receiver.id === currentUser?.id) {
+        return submission.giver.id
+      }
+      return null
+    })
+    .filter((user) => user !== null)
+  console.log({ usersReceivedFeedbackFrom })
 
   return {
     feedBackReceived,

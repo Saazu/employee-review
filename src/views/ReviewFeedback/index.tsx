@@ -6,28 +6,23 @@ import User from '../../components/User/User'
 import { UserT } from '../../context/types'
 import { QuestionContext } from '../../context/QuestionProvider'
 import NoFeedbacDisplay from '../../components/NoFeedbackDisplay/NoFeedbackDisplay'
-import MultipleChoiceQuestion from '../../components/MultipleChoiceQuestion/MultipleChoiceQuestion'
-import TextResponse from '../../components/TextResponse/TextResponse'
 import Scale from '../../components/Scale/Scale'
-import { ResponseContext } from '../../context/ResponseProvider'
 
 const ReviewFeedback = () => {
   const { feedBackGiven } = useSubmissions()
   const questions = React.useContext(QuestionContext)
-  const submissions = React.useContext(ResponseContext)
-  const [selectedTeamMember, setSelectedTeamMember] =
-    React.useState<UserT | null>(feedBackGiven[0]?.receiver)
-
-  const [selectedSubmission, setSelectedSubmission] = React.useState(
-    feedBackGiven.find((sub) => sub.receiver.id === selectedTeamMember?.id),
+  const [selectedTeamMember, setSelectedTeamMember] = React.useState<UserT>(
+    feedBackGiven[0].receiver,
   )
 
-  console.log('Submission', selectedSubmission)
-  console.log('Selected member', selectedTeamMember)
-  console.log({ feedBackGiven })
-  console.log({ allSubmission: submissions })
+  const [selectedSubmission, setSelectedSubmission] = React.useState(
+    feedBackGiven.find((sub) => sub.receiver.id === selectedTeamMember.id),
+  )
 
   function viewTeamMemberSubmission(user: UserT) {
+    setSelectedSubmission(
+      feedBackGiven.find((sub) => sub.receiver.id === user.id),
+    )
     setSelectedTeamMember(user)
   }
 
@@ -76,7 +71,7 @@ const ReviewFeedback = () => {
                               Number(
                                 selectedSubmission?.responses[index].answer,
                               )
-                            ].label
+                            ]?.label
                           }
                         </p>
                       )}

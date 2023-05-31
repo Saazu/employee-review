@@ -43,7 +43,14 @@ const Scale = (props: Props) => {
   }
 
   return (
-    <div className={styles.wrapper} onMouseLeave={handleMouseLeave}>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${maxValue}, 1fr)`,
+        gap: '2px',
+      }}
+      onMouseLeave={handleMouseLeave}
+    >
       {new Array(maxValue).fill(0).map((_, i) => (
         <button
           style={{

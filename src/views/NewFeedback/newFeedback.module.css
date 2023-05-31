@@ -59,6 +59,10 @@
   width: 100%
 }
 
+.scaleInputContainer {
+ width: 100%;
+}
+
 .backButton {
   font-weight: var(--fw-bold);
   font-size: var(--fs-sm);

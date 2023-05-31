@@ -20,11 +20,15 @@
   color: var(--darkGrey);
 }
 
-.feedbacSubHeading {
+.feedbackSubHeading {
   font-weight: var(--fw-semibold);
   font-size: var(--fs-l);
   line-height: var(--fs-xxxl);
   color: var(--offBlack)
+}
+
+.scaleInputContainer {
+  width: max-content;
 }
 
 .responseDisplay {
@@ -33,7 +37,12 @@
   align-items: center;
 }
 
-.question, .response{
+.question{
+  width: 50%;
+  margin-right: 3rem
+}
+
+.response{
   width: 50%;
 }
 
