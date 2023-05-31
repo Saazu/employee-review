@@ -7,17 +7,19 @@ import { UserT } from '../../context/types'
 import { QuestionContext } from '../../context/QuestionProvider'
 import NoFeedbacDisplay from '../../components/NoFeedbackDisplay/NoFeedbackDisplay'
 import Scale from '../../components/Scale/Scale'
+import classnames from 'classnames'
 
 const ReviewFeedback = () => {
   const { feedBackGiven } = useSubmissions()
   const questions = React.useContext(QuestionContext)
   const [selectedTeamMember, setSelectedTeamMember] = React.useState<UserT>(
-    feedBackGiven[0].receiver,
+    feedBackGiven[0]?.receiver,
   )
 
   const [selectedSubmission, setSelectedSubmission] = React.useState(
     feedBackGiven.find((sub) => sub.receiver.id === selectedTeamMember.id),
   )
+  console.log('Selected submission', selectedSubmission)
 
   function viewTeamMemberSubmission(user: UserT) {
     setSelectedSubmission(
@@ -39,6 +41,10 @@ const ReviewFeedback = () => {
                 </li>
                 {feedBackGiven.map((feedBackGiven) => (
                   <li
+                    className={classnames(styles.user, {
+                      [styles.userSelected]:
+                        selectedTeamMember.id === feedBackGiven.receiver.id,
+                    })}
                     key={feedBackGiven.receiver.id}
                     onClick={() =>
                       viewTeamMemberSubmission(feedBackGiven.receiver)
@@ -54,7 +60,7 @@ const ReviewFeedback = () => {
 
               <ul className={styles.feedback}>
                 <li>
-                  <h2 className={styles.feedbacSubHeading}>
+                  <h2 className={styles.feedbackSubHeading}>
                     {selectedTeamMember?.name}'s Feedback
                   </h2>
                 </li>
@@ -65,7 +71,7 @@ const ReviewFeedback = () => {
 
                     <div className={styles.response}>
                       {question.type === 'multipleChoice' && (
-                        <p>
+                        <>
                           {
                             question.options[
                               Number(
@@ -73,12 +79,13 @@ const ReviewFeedback = () => {
                               )
                             ]?.label
                           }
-                        </p>
+                        </>
                       )}
 
                       <div className={styles.scaleInputContainer}>
                         {question.type === 'scale' && (
                           <Scale
+                            viewOnly={true}
                             onSelectScore={() => console.log('Nein')}
                             selectedScore={Number(
                               selectedSubmission?.responses[index].answer,
@@ -89,7 +96,7 @@ const ReviewFeedback = () => {
 
                       {question.type === 'text' && (
                         <div className={styles.textResponseContainer}>
-                          <p>{selectedSubmission?.responses[index].answer}</p>
+                          <>{selectedSubmission?.responses[index].answer}</>
                         </div>
                       )}
                     </div>

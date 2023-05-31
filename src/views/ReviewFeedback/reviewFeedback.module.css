@@ -1,6 +1,7 @@
 .mainContainer {
   display: flex;
   justify-content: center;
+  padding: 0rem 5rem
 }
 
 .feedbackContainer {
@@ -24,26 +25,51 @@
   font-weight: var(--fw-semibold);
   font-size: var(--fs-l);
   line-height: var(--fs-xxxl);
-  color: var(--offBlack)
+  color: var(--offBlack);
+  padding: 0rem 1rem;
 }
 
 .scaleInputContainer {
   width: max-content;
 }
 
+.user {
+  color: var(--darkGrey);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.user:hover {
+  background-color: var(--lightPink);
+  color: var(--black);
+}
+
+.userSelected {
+  background-color: var(--lightGrey);
+}
+
 .responseDisplay {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 14px;
+  line-height: 19px;
+  color: var(--black);
+  
 }
 
-.question{
+.question {
   width: 50%;
-  margin-right: 3rem
+  margin-right: 3rem;
+  padding: 0rem 1rem;
+  font-weight: var(--fw-semibold); 
 }
 
-.response{
+.response {
   width: 50%;
+  padding: 0rem 1rem;
+  font-weight: var(--fw-semibold) !important; 
 }
 
 .users,
@@ -67,6 +93,14 @@
 
 .feedback li {
   padding: 1.5rem;
+}
+
+.feedback li:nth-child(1) {
+  border-bottom: none;
+}
+
+.feedback ul li:nth-child(1) {
+  border-top: none;
 }
 
 .users li,

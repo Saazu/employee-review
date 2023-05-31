@@ -6,10 +6,16 @@ type Props = {
   maxValue?: number
   selectedScore?: number
   onSelectScore: (score: NewAnswer) => void
+  viewOnly?: boolean
 }
 
 const Scale = (props: Props) => {
-  const { maxValue = 10, onSelectScore, selectedScore } = props
+  const {
+    maxValue = 10,
+    onSelectScore,
+    selectedScore,
+    viewOnly = false,
+  } = props
   const [scoreHoverOn, setScoreHoverOn] = React.useState<number>(0)
   const [currentScore, setCurrentScore] = React.useState<number>(
     selectedScore ? selectedScore : 0,
@@ -56,12 +62,15 @@ const Scale = (props: Props) => {
           style={{
             backgroundColor: `var(${backGroundColor(i + 1)})`,
             border: `1px solid var(${backGroundColor(i + 1)})`,
+            width: `-webkit-fill-available`,
+            minWidth: '35px',
           }}
           onMouseOver={handleHover}
           onClick={() => handleScoreSelect(i + 1)}
           value={i}
           key={i + 1}
           className={styles.box}
+          disabled={viewOnly}
         ></button>
       ))}
     </div>
