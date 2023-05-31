@@ -2,6 +2,28 @@
   border: var(--baseBorder);
   display: grid;
   grid-template-columns: 1fr 2fr;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+}
+
+.subHeading {
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  line-height: var(--fs-base);
+/* identical to box height */
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--darkGrey);
+}
+
+.feedbacSubHeading {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-l);
+  line-height: var(--fs-xxxl);
+  color: var(--offBlack)
+}
+
+.question, .response{
+  width: 50%;
 }
 
 .users,
@@ -11,6 +33,7 @@
 
 .users {
   border-right: var(--baseBorder);
+  min-height: 70vh;
 }
 
 .users li {
@@ -33,4 +56,10 @@
 
 .feedback li:last-child {
   border-bottom: none;
+}
+
+.header {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-xxl);
+  line-height: var(--fs-xxxl);
 }

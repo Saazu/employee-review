@@ -18,9 +18,9 @@
 
   /* TYPOGRAPHY */
   --font-family: sans-serif;
+  --fs-sm: 0.75rem;
   --fs-base: 1rem;
   --fs-l: 1.25rem;
-  --fs-sm: 0.75rem;
   --fs-xl: 1.75rem;
   --fs-xxl: 2rem;
   --fs-xxxl: 2.5rem;
