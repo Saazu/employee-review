@@ -5,7 +5,7 @@ import { NewAnswer } from '../../context/ResponseProvider'
 type Props = {
   maxValue?: number
   selectedScore?: number
-  onSelectScore: (score: NewAnswer) => void
+  onSelectScore?: (score: NewAnswer) => void
   viewOnly?: boolean
 }
 
@@ -35,7 +35,7 @@ const Scale = (props: Props) => {
       answer: value,
     }
     setCurrentScore(value)
-    onSelectScore(newResponse)
+    onSelectScore?.(newResponse)
   }
 
   const backGroundColor = (value: number) => {

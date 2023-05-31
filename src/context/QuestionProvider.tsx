@@ -44,7 +44,6 @@ const reducer = (
 
 const UIProvider = ({ children }: { children: React.ReactNode }): any => {
   const [state, dispatch] = React.useReducer(reducer, [])
-  console.log('questions', state)
 
   return (
     <DispatchQuestionContext.Provider value={dispatch}>

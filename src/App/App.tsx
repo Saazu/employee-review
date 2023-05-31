@@ -40,7 +40,6 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log('Responses', responses)
   return (
     <BrowserRouter>
       <ErrorHandler>

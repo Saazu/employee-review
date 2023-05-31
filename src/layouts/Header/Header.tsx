@@ -15,8 +15,6 @@ const Header = () => {
   let route = useRouteMatch()
   const { numFeedbackGiven, numFeedbackReceived } = useSubmissions()
 
-  console.log('current user', currentUser)
-
   const handleLogout = () => {
     logoutUser({ action: 'logout' })
   }

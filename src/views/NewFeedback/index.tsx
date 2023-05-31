@@ -47,7 +47,6 @@ const NewFeedback = () => {
     saveResponse(currentQuestionIndex, newResponse)
   }
 
-  console.log('Responses', responses)
   return (
     <MainLayout loggedIn>
       <div className={styles.wrapper}>

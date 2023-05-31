@@ -13,10 +13,6 @@ function useSubmissions() {
     (submission) => submission.giver.id === currentUser?.id,
   )
 
-  const feedBackReceived = allSumbissions.filter(
-    (submission) => submission.receiver.id === currentUser?.id,
-  )
-
   const usersGivenFeedbackTo = allSumbissions
     .map((submission) => {
       if (submission.giver.id === currentUser?.id) {
@@ -26,8 +22,6 @@ function useSubmissions() {
     })
     .filter((user) => user !== null)
 
-  console.log({ usersGivenFeedbackTo })
-
   const usersReceivedFeedbackFrom = allSumbissions
     .map((submission) => {
       if (submission.receiver.id === currentUser?.id) {
@@ -36,10 +30,8 @@ function useSubmissions() {
       return null
     })
     .filter((user) => user !== null)
-  console.log({ usersReceivedFeedbackFrom })
 
   return {
-    feedBackReceived,
     feedBackGiven,
     feedbackRecived,
     usersGivenFeedbackTo,

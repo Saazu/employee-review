@@ -14,13 +14,9 @@ const SubmissionCompletion = () => {
   const currentUser = React.useContext(AccountContext)
   const { usersGivenFeedbackTo } = useSubmissions()
 
-  console.log({ usersGivenFeedbackTo })
-
   const usersToDisplay = users?.filter(
     (user) => !usersGivenFeedbackTo.includes(user?.id),
   )
-
-  console.log('Number to go', usersToDisplay?.length)
 
   return (
     <MainLayout loggedIn>
@@ -40,7 +36,6 @@ const SubmissionCompletion = () => {
                   <span style={{ flex: 1 }} />
                   <Button
                     onClick={() => {
-                      console.log('Fill out', user)
                       push('/share-feedback/new', {
                         giver: currentUser,
                         receiver: user,

@@ -23,8 +23,6 @@ const reducer = (state: UserT[] | null, update: SetUsersT): UserT[] | null => {
 const UIProvider = ({ children }: { children: React.ReactNode }): any => {
   const [state, dispatch] = React.useReducer(reducer, [])
 
-  console.log('users', state)
-
   return (
     <DispatchUserContext.Provider value={dispatch}>
       <UserContext.Provider value={state}>{children}</UserContext.Provider>

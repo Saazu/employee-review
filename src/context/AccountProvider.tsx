@@ -21,10 +21,8 @@ const reducer = (
   update: LoginAccountT | LogoutAccountT,
 ): UserT | null => {
   if (update.action === 'login') {
-    console.log('login ', state)
     return update.payload
   } else if (update.action === 'logout') {
-    console.log('logout')
     return null
   }
   return state
@@ -32,8 +30,6 @@ const reducer = (
 
 const UIProvider = ({ children }: { children: React.ReactNode }): any => {
   const [state, dispatch] = React.useReducer(reducer, null)
-
-  console.log('account', state)
 
   return (
     <DispatchAccountContext.Provider value={dispatch}>
