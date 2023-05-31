@@ -1,4 +1,33 @@
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  padding: 0rem 5rem
+}
 
+.feedbackContainer {
+  border: var(--baseBorder);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+}
+
+.subHeading {
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  line-height: var(--fs-base);
+/* identical to box height */
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--darkGrey);
+}
+
+.feedbackSubHeading {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-l);
+  line-height: var(--fs-xxxl);
+  color: var(--offBlack);
+  padding: 0rem 1rem;
+}
 
 .scaleInputContainer {
   width: max-content;

@@ -10,30 +10,26 @@ import Scale from '../../components/Scale/Scale'
 import classnames from 'classnames'
 
 const TeamFeedback = () => {
-  const { feedBackReceived } = useSubmissions()
+  const { feedbackRecived } = useSubmissions()
   const questions = React.useContext(QuestionContext)
+
   const [selectedTeamMember, setSelectedTeamMember] = React.useState<UserT>(
-    feedBackReceived[0]?.receiver,
+    feedbackRecived[0]?.receiver,
   )
 
-  console.log('Feedback received', feedBackReceived)
-
-  const [selectedSubmission, setSelectedSubmission] = React.useState(
-    feedBackReceived.find((sub) => sub.receiver.id === selectedTeamMember.id),
+  const selectedSubmission = feedbackRecived.find(
+    (sub) => sub.receiver.id === selectedTeamMember.id,
   )
-  console.log('Selected submission', selectedSubmission)
+  console.log('selected', selectedSubmission)
 
   function viewTeamMemberSubmission(user: UserT) {
-    setSelectedSubmission(
-      feedBackReceived.find((sub) => sub.receiver.id === user.id),
-    )
     setSelectedTeamMember({ ...user })
   }
 
   return (
     <MainLayout loggedIn>
       <div className={styles.mainContainer}>
-        {feedBackReceived.length > 0 ? (
+        {feedbackRecived.length > 0 ? (
           <div>
             <h1 className={styles.header}>Team Feedback</h1>
             <div className={styles.feedbackContainer}>
@@ -41,20 +37,18 @@ const TeamFeedback = () => {
                 <li>
                   <h3 className={styles.subHeading}>Feedback given</h3>
                 </li>
-                {feedBackReceived.map((feedBackGiven) => (
+                {feedbackRecived.map((feedback) => (
                   <li
                     className={classnames(styles.user, {
                       [styles.userSelected]:
-                        selectedTeamMember.id === feedBackGiven.giver.id,
+                        selectedTeamMember.id === feedback.giver.id,
                     })}
-                    key={feedBackGiven.receiver.id}
-                    onClick={() =>
-                      viewTeamMemberSubmission(feedBackGiven.giver)
-                    }
+                    key={feedback.receiver.id}
+                    onClick={() => viewTeamMemberSubmission(feedback.giver)}
                   >
                     <User
-                      name={feedBackGiven.giver.name}
-                      avatarUrl={feedBackGiven.giver.avatarUrl}
+                      name={feedback.giver.name}
+                      avatarUrl={feedback.giver.avatarUrl}
                     />
                   </li>
                 ))}
@@ -75,11 +69,11 @@ const TeamFeedback = () => {
                       {question.type === 'multipleChoice' && (
                         <>
                           {
-                            question.options[
-                              Number(
+                            question.options.find(
+                              (option) =>
+                                option.value ===
                                 selectedSubmission?.responses[index]?.answer,
-                              )
-                            ]?.label
+                            )?.label
                           }
                         </>
                       )}
@@ -88,7 +82,6 @@ const TeamFeedback = () => {
                         {question.type === 'scale' && (
                           <Scale
                             viewOnly={true}
-                            onSelectScore={() => console.log('Nein')}
                             selectedScore={Number(
                               selectedSubmission?.responses[index]?.answer,
                             )}
