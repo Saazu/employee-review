@@ -6,14 +6,24 @@ import User from '../../components/User/User'
 import { UserT } from '../../context/types'
 import { QuestionContext } from '../../context/QuestionProvider'
 import NoFeedbacDisplay from '../../components/NoFeedbackDisplay/NoFeedbackDisplay'
-import NotFound from '../../components/NotFound404/NotFound'
+import MultipleChoiceQuestion from '../../components/MultipleChoiceQuestion/MultipleChoiceQuestion'
+import TextResponse from '../../components/TextResponse/TextResponse'
+import Scale from '../../components/Scale/Scale'
+import { ResponseContext } from '../../context/ResponseProvider'
 
 const ReviewFeedback = () => {
   const { feedBackGiven } = useSubmissions()
   const questions = React.useContext(QuestionContext)
+  const submissions = React.useContext(ResponseContext)
   const [selectedTeamMember, setSelectedTeamMember] =
     React.useState<UserT | null>(feedBackGiven[0]?.receiver)
-  console.log('hello')
+
+  const [selectedSubmission, setSelectedSubmission] = React.useState(
+    submissions.find((sub) => sub.receiver.id === selectedTeamMember?.id),
+  )
+
+  console.log('Submission', selectedSubmission?.answers)
+  console.log('Selected member', selectedTeamMember)
   console.log({ feedBackGiven })
 
   function viewTeamMemberSubmission(user: UserT) {
@@ -24,9 +34,8 @@ const ReviewFeedback = () => {
     <MainLayout loggedIn>
       <div className={styles.mainContainer}>
         {feedBackGiven.length > 0 ? (
-          <>
+          <div>
             <h1 className={styles.header}>My Feedback</h1>
-
             <div className={styles.feedbackContainer}>
               <ul className={styles.users}>
                 <li>
@@ -53,15 +62,36 @@ const ReviewFeedback = () => {
                     {selectedTeamMember?.name}'s Feedback
                   </h2>
                 </li>
-                {questions.map((question) => (
-                  <li key={question.id}>
+
+                {questions.map((question, index) => (
+                  <li className={styles.responseDisplay} key={question.id}>
                     <p className={styles.question}>{question.label}</p>
-                    <div className={styles.response}>{}</div>
+
+                    <div className={styles.response}>
+                      {question.type === 'multipleChoice' && (
+                        <p>{question.label}</p>
+                      )}
+
+                      <div className={styles.scaleInputContainer}>
+                        {question.type === 'scale' && (
+                          <Scale
+                            onSelectScore={() => console.log('Nein')}
+                            selectedScore={6}
+                          />
+                        )}
+                      </div>
+
+                      {question.type === 'text' && (
+                        <div className={styles.textResponseContainer}>
+                          <p>{question.label}</p>
+                        </div>
+                      )}
+                    </div>
                   </li>
                 ))}
               </ul>
             </div>
-          </>
+          </div>
         ) : (
           <NoFeedbacDisplay />
         )}

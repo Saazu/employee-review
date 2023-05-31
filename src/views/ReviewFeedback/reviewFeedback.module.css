@@ -27,6 +27,12 @@
   color: var(--offBlack)
 }
 
+.responseDisplay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .question, .response{
   width: 50%;
 }

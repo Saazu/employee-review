@@ -1,5 +1,6 @@
 import * as React from 'react'
 import NotFound from '../components/NotFound404/NotFound'
+import MainLayout from '../layouts/MainLayout/MainLayout'
 
 type Props = {
   children: React.ReactNode
@@ -20,14 +21,16 @@ export default class ErrorHandler extends React.Component<Props, State> {
 
   render() {
     return this.state.error ? (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <NotFound />
-      </div>
+      <MainLayout>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <NotFound />
+        </div>
+      </MainLayout>
     ) : (
       this.props.children
     )
