@@ -9,7 +9,7 @@ export type NewAnswer = {
 export type Submission = {
   giver: UserT
   receiver: UserT
-  answers: NewAnswer[]
+  responses: NewAnswer[]
 }
 
 type DispatchResponseContextT = any

@@ -19,12 +19,13 @@ const ReviewFeedback = () => {
     React.useState<UserT | null>(feedBackGiven[0]?.receiver)
 
   const [selectedSubmission, setSelectedSubmission] = React.useState(
-    submissions.find((sub) => sub.receiver.id === selectedTeamMember?.id),
+    feedBackGiven.find((sub) => sub.receiver.id === selectedTeamMember?.id),
   )
 
-  console.log('Submission', selectedSubmission?.answers)
+  console.log('Submission', selectedSubmission)
   console.log('Selected member', selectedTeamMember)
   console.log({ feedBackGiven })
+  console.log({ allSubmission: submissions })
 
   function viewTeamMemberSubmission(user: UserT) {
     setSelectedTeamMember(user)
@@ -69,21 +70,31 @@ const ReviewFeedback = () => {
 
                     <div className={styles.response}>
                       {question.type === 'multipleChoice' && (
-                        <p>{question.label}</p>
+                        <p>
+                          {
+                            question.options[
+                              Number(
+                                selectedSubmission?.responses[index].answer,
+                              )
+                            ].label
+                          }
+                        </p>
                       )}
 
                       <div className={styles.scaleInputContainer}>
                         {question.type === 'scale' && (
                           <Scale
                             onSelectScore={() => console.log('Nein')}
-                            selectedScore={6}
+                            selectedScore={Number(
+                              selectedSubmission?.responses[index].answer,
+                            )}
                           />
                         )}
                       </div>
 
                       {question.type === 'text' && (
                         <div className={styles.textResponseContainer}>
-                          <p>{question.label}</p>
+                          <p>{selectedSubmission?.responses[index].answer}</p>
                         </div>
                       )}
                     </div>

@@ -12,6 +12,10 @@ function useSubmissions() {
     (submission) => submission.giver.id === currentUser?.id,
   )
 
+  const feedBackReceived = allSumbissions.filter(
+    (submission) => submission.receiver.id === currentUser?.id,
+  )
+
   const usersGivenFeedbackTo = allSumbissions.map((submission) => {
     if (submission.giver.id === currentUser?.id) {
       return submission.receiver.id
@@ -25,6 +29,7 @@ function useSubmissions() {
   })
 
   return {
+    feedBackReceived,
     feedBackGiven,
     feedbackRecived,
     usersGivenFeedbackTo,
