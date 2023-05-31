@@ -10,9 +10,9 @@ import http from '../common/http'
 import NotFound from '../views/NotFound'
 import ReviewFeedback from '../views/ReviewFeedback'
 import { AccountContext } from '../context/AccountProvider'
+import { ResponseContext } from '../context/ResponseProvider'
 import PrivateRoute from '../components/Routing/PrivateRoute'
 import NewFeedback from '../views/NewFeedback'
-import { ResponseContext } from '../context/ResponseProvider'
 import SubmissionCompletion from '../views/SubmissionCompletion'
 import TeamFeedback from '../views/TeamFeedback'
 
@@ -39,6 +39,8 @@ const App = () => {
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  console.log('Responses', responses)
 
   return (
     <BrowserRouter>

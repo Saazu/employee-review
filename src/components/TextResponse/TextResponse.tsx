@@ -5,7 +5,7 @@ import { NewAnswer } from '../../context/ResponseProvider'
 type Props = {
   handleResponseChange: (response: NewAnswer) => void
   disabled?: boolean
-  savedText?: string
+  savedText?: string | null
 }
 
 const TextResponse = (props: Props) => {

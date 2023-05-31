@@ -28,7 +28,7 @@ function useGiveFeedbackWizard(giver: UserT, receiver: UserT, questions: any) {
     }
   }
 
-  function saveResponse(questionIndex: number, response: NewAnswer) {
+  function saveResponse(questionIndex: number, response: NewAnswer | null) {
     const updatedResponse = [...responses]
     updatedResponse[questionIndex] = response
     setResponses(updatedResponse)
@@ -46,6 +46,8 @@ function useGiveFeedbackWizard(giver: UserT, receiver: UserT, questions: any) {
       payload: updatedSummissions,
     })
   }
+
+  console.log('Current responses', responses)
   return {
     currentQuestion,
     goToNextQuestion,
