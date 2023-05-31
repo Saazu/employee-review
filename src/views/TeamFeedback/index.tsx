@@ -63,7 +63,7 @@ const TeamFeedback = () => {
               <ul className={styles.feedback}>
                 <li>
                   <h2 className={styles.feedbackSubHeading}>
-                    {selectedTeamMember?.name}'s Feedback
+                    {selectedSubmission?.giver.name}'s Feedback
                   </h2>
                 </li>
 
