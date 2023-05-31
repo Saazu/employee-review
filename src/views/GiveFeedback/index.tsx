@@ -6,12 +6,21 @@ import Button from '../../components/Button'
 import styles from './giveFeedback.module.css'
 import { useHistory } from 'react-router-dom'
 import { AccountContext } from '../../context/AccountProvider'
+import useSubmissions from '../../hooks/useSubmissions'
 
 const GiveFeedback = () => {
   const users = React.useContext(UserContext)
   const { push } = useHistory()
   const currentUser = React.useContext(AccountContext)
-  const usersToDisplay = users?.filter((user) => user.id !== currentUser?.id)
+  const { usersGivenFeedbackTo } = useSubmissions()
+
+  const usersToDisplay = users?.filter(
+    (user) =>
+      user.id !== currentUser?.id ||
+      !usersGivenFeedbackTo.includes(currentUser?.id),
+  )
+
+  console.log('Number to go', usersToDisplay?.length)
 
   return (
     <MainLayout loggedIn>

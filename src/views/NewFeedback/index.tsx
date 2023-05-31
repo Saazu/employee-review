@@ -37,6 +37,7 @@ const NewFeedback = () => {
   function handleNextButtonClick() {
     if (currentQuestionIndex + 1 === numWizardSteps) {
       completeSubmission()
+      push('/share-feedback/complete')
     } else {
       goToNextQuestion()
     }
@@ -112,7 +113,7 @@ const NewFeedback = () => {
               )}
               <Button
                 secondary
-                onClick={() => push('/share-feedback/complete')}
+                onClick={handleNextButtonClick}
                 disabled={responses[currentQuestionIndex] === null}
               >
                 Next

@@ -6,13 +6,19 @@ import Button from '../../components/Button'
 import { useHistory } from 'react-router-dom'
 import { AccountContext } from '../../context/AccountProvider'
 import { UserContext } from '../../context/UserProvider'
+import useSubmissions from '../../hooks/useSubmissions'
 
 const SubmissionCompletion = () => {
   const users = React.useContext(UserContext)
   const { push } = useHistory()
   const currentUser = React.useContext(AccountContext)
+  const { usersGivenFeedbackTo } = useSubmissions()
 
-  const usersToDisplay = users?.filter((user) => user.id !== currentUser?.id)
+  const usersToDisplay = users?.filter(
+    (user) =>
+      user.id !== currentUser?.id ||
+      !usersGivenFeedbackTo.includes(currentUser?.id),
+  )
 
   return (
     <MainLayout loggedIn>
