@@ -6,11 +6,13 @@ import {
   DispatchAccountContext,
 } from '../../context/AccountProvider'
 import { useRouteMatch } from 'react-router-dom'
+import useSubmissions from '../../hooks/useSubmissions'
 
 const Header = () => {
   const currentUser = React.useContext(AccountContext)
   const logoutUser = React.useContext(DispatchAccountContext)
   let route = useRouteMatch()
+  const { numFeedbackGiven, numFeedbackReceived } = useSubmissions()
 
   console.log('current user', currentUser)
 
@@ -30,10 +32,16 @@ const Header = () => {
         Share Feedback
       </NavLink>
       <NavLink exact to="/my-feedback" activeClassName={styles.active}>
-        My Feedback
+        My Feedback{' '}
+        {numFeedbackGiven > 0 && (
+          <span className={styles.notification}>{numFeedbackGiven}</span>
+        )}
       </NavLink>
       <NavLink exact to="/team-feedback" activeClassName={styles.active}>
-        Team Feeback
+        Team Feeback{' '}
+        {numFeedbackReceived > 0 && (
+          <span className={styles.notification}>{numFeedbackReceived}</span>
+        )}
       </NavLink>
       <span className={styles.spacer} />
       <NavLink exact to="/" onClick={handleLogout}>

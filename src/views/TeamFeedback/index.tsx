@@ -16,6 +16,8 @@ const TeamFeedback = () => {
     feedBackReceived[0]?.receiver,
   )
 
+  console.log('Feedback received', feedBackReceived)
+
   const [selectedSubmission, setSelectedSubmission] = React.useState(
     feedBackReceived.find((sub) => sub.receiver.id === selectedTeamMember.id),
   )
@@ -25,7 +27,7 @@ const TeamFeedback = () => {
     setSelectedSubmission(
       feedBackReceived.find((sub) => sub.receiver.id === user.id),
     )
-    setSelectedTeamMember(user)
+    setSelectedTeamMember({ ...user })
   }
 
   return (
@@ -33,7 +35,7 @@ const TeamFeedback = () => {
       <div className={styles.mainContainer}>
         {feedBackReceived.length > 0 ? (
           <div>
-            <h1 className={styles.header}>My Feedback</h1>
+            <h1 className={styles.header}>Team Feedback</h1>
             <div className={styles.feedbackContainer}>
               <ul className={styles.users}>
                 <li>
@@ -43,16 +45,16 @@ const TeamFeedback = () => {
                   <li
                     className={classnames(styles.user, {
                       [styles.userSelected]:
-                        selectedTeamMember.id === feedBackGiven.receiver.id,
+                        selectedTeamMember.id === feedBackGiven.giver.id,
                     })}
                     key={feedBackGiven.receiver.id}
                     onClick={() =>
-                      viewTeamMemberSubmission(feedBackGiven.receiver)
+                      viewTeamMemberSubmission(feedBackGiven.giver)
                     }
                   >
                     <User
-                      name={feedBackGiven.receiver.name}
-                      avatarUrl={feedBackGiven.receiver.avatarUrl}
+                      name={feedBackGiven.giver.name}
+                      avatarUrl={feedBackGiven.giver.avatarUrl}
                     />
                   </li>
                 ))}
