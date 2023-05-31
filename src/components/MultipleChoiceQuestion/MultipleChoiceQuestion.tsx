@@ -1,5 +1,6 @@
 import * as React from 'react'
 import styles from './multipleChoiceQuestion.module.css'
+import { NewAnswer } from '../../context/ResponseProvider'
 
 type Props = {
   selectedValue?: number
@@ -7,7 +8,7 @@ type Props = {
     label: string
     value: number
   }[]
-  onOptionSelect: (value: number) => void
+  onOptionSelect: (value: NewAnswer) => void
 }
 
 const MultipleChoiceQuestion = (props: Props) => {
@@ -15,12 +16,14 @@ const MultipleChoiceQuestion = (props: Props) => {
   const [selectedOption, setSelectedOption] = React.useState<number>(
     selectedValue ? selectedValue : 0,
   )
-  console.log({ options })
 
   function handleOptionSelection(value: number) {
-    onOptionSelect(value)
+    const newResponse: NewAnswer = {
+      type: 'multipleChoice',
+      answer: value,
+    }
+    onOptionSelect(newResponse)
     setSelectedOption(value)
-    console.log('selected', value)
   }
 
   const backgroundColor = (value: number) => {

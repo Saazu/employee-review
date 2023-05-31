@@ -12,9 +12,11 @@ import ReviewFeedback from '../views/ReviewFeedback'
 import { AccountContext } from '../context/AccountProvider'
 import PrivateRoute from '../components/Routing/PrivateRoute'
 import NewFeedback from '../views/NewFeedback'
+import { ResponseContext } from '../context/ResponseProvider'
 
 const App = () => {
   const currentUser = React.useContext(AccountContext)
+  const responses = React.useContext(ResponseContext)
   const userDispatch = React.useContext(DispatchUserContext)
   const questionDispatch = React.useContext(DispatchQuestionContext)
   const isLoggedIn = currentUser != null
@@ -36,6 +38,7 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  console.log('Responses', responses)
   return (
     <BrowserRouter>
       <ErrorHandler>

@@ -1,45 +1,29 @@
 import * as React from 'react'
 import { UserT } from './types'
 
-export type Responses = {
-  giver: UserT
-  receiver: UserT
-  responses: (ResponseT | Response2T)[]
-}
-
-export type ResponseT = {
-  id: string
-  type: 'scale' | 'text'
-  required: boolean
-  label: string
+export type NewAnswer = {
+  type: 'scale' | 'text' | 'multipleChoice'
   answer: number | string
 }
 
-export type Response2T = {
-  id: string
-  required: boolean
-  label: string
-  type: 'multipleChoice'
-  answer: number
+export type Submission = {
+  giver: UserT
+  receiver: UserT
+  answers: NewAnswer[]
 }
 
 type DispatchResponseContextT = any
 
 export const DispatchResponseContext =
   React.createContext<DispatchResponseContextT | null>(null)
-export const ResponseContext = React.createContext<(ResponseT | Response2T)[]>(
-  [],
-)
+export const ResponseContext = React.createContext<Submission[]>([])
 
 type SetResponsesT = {
   action: 'set'
-  payload: Array<ResponseT | Response2T>
+  payload: Submission[]
 }
 
-const reducer = (
-  state: (ResponseT | Response2T)[],
-  update: SetResponsesT,
-): (ResponseT | Response2T)[] => {
+const reducer = (state: Submission[], update: SetResponsesT): Submission[] => {
   if (update.action === 'set') {
     return update.payload
   }

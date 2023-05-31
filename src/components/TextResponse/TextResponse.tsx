@@ -1,8 +1,9 @@
-import styles from './textResponse.module.css'
 import * as React from 'react'
+import styles from './textResponse.module.css'
+import { NewAnswer } from '../../context/ResponseProvider'
 
 type Props = {
-  handleResponseChange: (response: string) => void
+  handleResponseChange: (response: NewAnswer) => void
   disabled?: boolean
   savedText?: string
 }
@@ -14,8 +15,13 @@ const TextResponse = (props: Props) => {
   )
 
   function handleTextInput(event: React.FormEvent<HTMLTextAreaElement>) {
-    setResponsetext(event.currentTarget.value)
-    handleResponseChange?.(event.currentTarget.value)
+    const updatedText = event.currentTarget.value
+    setResponsetext(updatedText)
+    const newResponse: NewAnswer = {
+      type: 'text',
+      answer: updatedText,
+    }
+    handleResponseChange(newResponse)
   }
 
   return (

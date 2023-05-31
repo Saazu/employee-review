@@ -1,8 +1,17 @@
 import * as React from 'react'
 import { UserT } from '../context/types'
+import {
+  NewAnswer,
+  DispatchResponseContext,
+  ResponseContext,
+} from '../context/ResponseProvider'
 
 function useGiveFeedbackWizard(giver: UserT, receiver: UserT, questions: any) {
-  const [responses, setResponses] = React.useState<(string | number)[]>([])
+  const responseDispatch = React.useContext(DispatchResponseContext)
+  const allSumbissions = React.useContext(ResponseContext)
+  const [responses, setResponses] = React.useState<(NewAnswer | null)[]>(
+    new Array(questions.length).fill(null),
+  )
   const [currentQuestionIndex, setCurrentQuestionIndex] =
     React.useState<number>(0)
   const currentQuestion = questions[currentQuestionIndex]
@@ -19,22 +28,33 @@ function useGiveFeedbackWizard(giver: UserT, receiver: UserT, questions: any) {
     }
   }
 
-  function saveResponse(questionIndex: number, response: number | string) {
-    const updatedResponse = {
-      ...responses,
-    }
+  function saveResponse(questionIndex: number, response: NewAnswer) {
+    const updatedResponse = [...responses]
     updatedResponse[questionIndex] = response
+    setResponses(updatedResponse)
   }
 
+  function completeSubmission() {
+    const newUserSubmission = {
+      giver,
+      receiver,
+      responses,
+    }
+    const updatedSummissions = [...allSumbissions, newUserSubmission]
+    responseDispatch({
+      action: 'set',
+      payload: updatedSummissions,
+    })
+  }
   return {
     currentQuestion,
     goToNextQuestion,
     goToPreviousQuestion,
     saveResponse,
     responses,
-    setResponses,
     numWizardSteps: questions.length,
     currentQuestionIndex,
+    completeSubmission,
   }
 }
 

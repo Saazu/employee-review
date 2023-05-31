@@ -11,6 +11,7 @@ import Button from '../../components/Button/Button'
 import TextResponse from '../../components/TextResponse/TextResponse'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import useGiveFeedbackWizard from '../../hooks/useGiveFeedbackWizard'
+import { NewAnswer } from '../../context/ResponseProvider'
 
 type LocationState = {
   giver: UserT
@@ -26,24 +27,26 @@ const NewFeedback = () => {
     currentQuestion,
     goToNextQuestion,
     goToPreviousQuestion,
-    saveResponse,
-    responses,
-    setResponses,
     numWizardSteps,
     currentQuestionIndex,
+    completeSubmission,
+    saveResponse,
+    responses,
   } = useGiveFeedbackWizard(giver, receiver, questions)
 
-  console.log({
-    currentQuestion,
-    goToNextQuestion,
-    goToPreviousQuestion,
-    saveResponse,
-    responses,
-    setResponses,
-    numWizardSteps,
-    currentQuestionIndex,
-  })
+  function handleNextButtonClick() {
+    if (currentQuestionIndex + 1 === numWizardSteps) {
+      completeSubmission()
+    } else {
+      goToNextQuestion()
+    }
+  }
 
+  function saveAnswer(newResponse: NewAnswer) {
+    saveResponse(currentQuestionIndex, newResponse)
+  }
+
+  console.log('Responses', responses)
   return (
     <MainLayout loggedIn>
       <div className={styles.wrapper}>
@@ -55,12 +58,12 @@ const NewFeedback = () => {
             BACK
           </div>
           <div className={styles.header}>
-            <div>
+            <section>
               <h2 className={styles.question}>{currentQuestion.label}</h2>
               <p className={styles.subTitle}>
                 SHARE YOUR FEEDBACK FOR {receiver.name.toUpperCase()}
               </p>
-            </div>
+            </section>
             <div>
               <User
                 name={receiver.name}
@@ -74,36 +77,44 @@ const NewFeedback = () => {
               {currentQuestion.type === 'multipleChoice' && (
                 <MultipleChoiceQuestion
                   options={currentQuestion.options}
-                  onOptionSelect={(e) => console.log('Selected', e)}
+                  onOptionSelect={saveAnswer}
                 />
               )}
               <div className={styles.scaleInputContainer}>
                 {currentQuestion.type === 'scale' && (
-                  <Scale onSelectScore={(value) => console.log(value)} />
+                  <Scale onSelectScore={saveAnswer} />
                 )}
               </div>
 
               {currentQuestion.type === 'text' && (
                 <div className={styles.textResponseContainer}>
-                  <TextResponse
-                    handleResponseChange={() => console.log('New stuff')}
-                  />
+                  <TextResponse handleResponseChange={saveAnswer} />
                 </div>
               )}
             </div>
 
             <div className={styles.navigation}>
-              <Button secondary onClick={goToPreviousQuestion}>
+              <Button
+                disabled={currentQuestionIndex === 0}
+                secondary
+                onClick={goToPreviousQuestion}
+              >
                 Previous
               </Button>
+              {!currentQuestion.required && (
+                <Button
+                  disabled={currentQuestion.required}
+                  secondary
+                  onClick={goToNextQuestion}
+                >
+                  Skip
+                </Button>
+              )}
               <Button
-                disabled={currentQuestion.required}
                 secondary
-                onClick={goToNextQuestion}
+                onClick={handleNextButtonClick}
+                disabled={responses[currentQuestionIndex] === null}
               >
-                Skip
-              </Button>
-              <Button secondary onClick={goToNextQuestion}>
                 Next
               </Button>
             </div>
@@ -111,12 +122,14 @@ const NewFeedback = () => {
               completed={currentQuestionIndex + 1}
               total={numWizardSteps}
             />
-            <div>
-              <p>QUESTIONS ANSWERED</p>
-              <p>
+            <section>
+              <h4 className={styles.questionTrackerHeader}>
+                QUESTIONS ANSWERED
+              </h4>
+              <p className={styles.questionNumberTracker}>
                 {currentQuestionIndex + 1}/{numWizardSteps}
               </p>
-            </div>
+            </section>
           </div>
         </div>
       </div>
