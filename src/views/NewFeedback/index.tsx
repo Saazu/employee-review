@@ -43,8 +43,26 @@ const NewFeedback = () => {
     }
   }
 
-  function saveAnswer(newResponse: NewAnswer) {
+  function handleSkip() {
+    saveAnswer(null)
+    if (currentQuestionIndex + 1 === numWizardSteps) {
+      completeSubmission()
+      push('/share-feedback/complete')
+    } else {
+      goToNextQuestion()
+    }
+  }
+
+  function saveAnswer(newResponse: NewAnswer | null) {
     saveResponse(currentQuestionIndex, newResponse)
+  }
+
+  function formatSavedText(previousAnswer: NewAnswer | null) {
+    if (!previousAnswer) {
+      return ''
+    } else {
+      return String(previousAnswer.answer).trim()
+    }
   }
 
   return (
@@ -76,6 +94,9 @@ const NewFeedback = () => {
             <div className={styles.responseInput}>
               {currentQuestion.type === 'multipleChoice' && (
                 <MultipleChoiceQuestion
+                  selectedValue={Number(
+                    responses[currentQuestionIndex]?.answer,
+                  )}
                   options={currentQuestion.options}
                   onOptionSelect={saveAnswer}
                 />
@@ -83,13 +104,21 @@ const NewFeedback = () => {
 
               {currentQuestion.type === 'scale' && (
                 <div className={styles.scaleInputContainer}>
-                  <Scale onSelectScore={saveAnswer} />
+                  <Scale
+                    selectedScore={Number(
+                      responses[currentQuestionIndex]?.answer,
+                    )}
+                    onSelectScore={saveAnswer}
+                  />
                 </div>
               )}
 
               {currentQuestion.type === 'text' && (
                 <div className={styles.textResponseContainer}>
-                  <TextResponse handleResponseChange={saveAnswer} />
+                  <TextResponse
+                    savedText={formatSavedText(responses[currentQuestionIndex])}
+                    handleResponseChange={saveAnswer}
+                  />
                 </div>
               )}
             </div>
@@ -106,7 +135,7 @@ const NewFeedback = () => {
                 <Button
                   disabled={currentQuestion.required}
                   secondary
-                  onClick={handleNextClick}
+                  onClick={handleSkip}
                 >
                   Skip
                 </Button>
