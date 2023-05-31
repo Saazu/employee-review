@@ -7,6 +7,7 @@ import {
 } from '../../context/AccountProvider'
 import { useRouteMatch } from 'react-router-dom'
 import useSubmissions from '../../hooks/useSubmissions'
+import User from '../../components/User/User'
 
 const Header = () => {
   const currentUser = React.useContext(AccountContext)
@@ -45,7 +46,17 @@ const Header = () => {
       </NavLink>
       <span className={styles.spacer} />
       <NavLink exact to="/" onClick={handleLogout}>
-        Logout {currentUser && `${currentUser.name}`}
+        {currentUser && (
+          <User
+            name={currentUser.name}
+            displayName={false}
+            avatarUrl={currentUser.avatarUrl}
+          />
+        )}{' '}
+        <div className={styles.logoutWrapper}>
+          <p className={styles.name}>{currentUser && currentUser.name}</p>
+          <p className={styles.logout}>Logout</p>
+        </div>
       </NavLink>
     </div>
   )
