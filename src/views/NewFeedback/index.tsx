@@ -81,11 +81,12 @@ const NewFeedback = () => {
                   onOptionSelect={saveAnswer}
                 />
               )}
-              <div className={styles.scaleInputContainer}>
-                {currentQuestion.type === 'scale' && (
+
+              {currentQuestion.type === 'scale' && (
+                <div className={styles.scaleInputContainer}>
                   <Scale onSelectScore={saveAnswer} />
-                )}
-              </div>
+                </div>
+              )}
 
               {currentQuestion.type === 'text' && (
                 <div className={styles.textResponseContainer}>
