@@ -21,11 +21,13 @@ export default class ErrorHandler extends React.Component<Props, State> {
 
   render() {
     return this.state.error ? (
-      <MainLayout>
+      <MainLayout loggedIn>
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
+            width: '100%',
+            padding: '2rem',
           }}
         >
           <NotFound />

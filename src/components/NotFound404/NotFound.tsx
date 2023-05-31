@@ -2,7 +2,7 @@ import Button from '../Button/Button'
 import styles from './NotFound.module.css'
 import { useHistory } from 'react-router-dom'
 
-const NotFound = () => {
+const NotFound404 = () => {
   const { push } = useHistory()
 
   return (
@@ -16,4 +16,4 @@ const NotFound = () => {
   )
 }
 
-export default NotFound
+export default NotFound404
