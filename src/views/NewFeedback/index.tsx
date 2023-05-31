@@ -112,7 +112,7 @@ const NewFeedback = () => {
               )}
               <Button
                 secondary
-                onClick={handleNextButtonClick}
+                onClick={() => push('/share-feedback/complete')}
                 disabled={responses[currentQuestionIndex] === null}
               >
                 Next

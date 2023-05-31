@@ -1,22 +1,26 @@
 import * as React from 'react'
-import { UserContext } from '../../context/UserProvider'
 import MainLayout from '../../layouts/MainLayout'
+import styles from './submissionCompletion.module.css'
 import User from '../../components/User'
 import Button from '../../components/Button'
-import styles from './giveFeedback.module.css'
 import { useHistory } from 'react-router-dom'
 import { AccountContext } from '../../context/AccountProvider'
+import { UserContext } from '../../context/UserProvider'
 
-const GiveFeedback = () => {
+const SubmissionCompletion = () => {
   const users = React.useContext(UserContext)
   const { push } = useHistory()
   const currentUser = React.useContext(AccountContext)
+
   const usersToDisplay = users?.filter((user) => user.id !== currentUser?.id)
 
   return (
     <MainLayout loggedIn>
       <div className={styles.wrapper}>
-        <h1>Share Feedback</h1>
+        <h2 className={styles.header}>Thank you for sharing your feedback!</h2>
+        <h3 className={styles.subTitle}>
+          Continue to give feedback to other team members.
+        </h3>
 
         {usersToDisplay && usersToDisplay.length > 0 && (
           <ul className={styles.users}>
@@ -44,4 +48,4 @@ const GiveFeedback = () => {
   )
 }
 
-export default GiveFeedback
+export default SubmissionCompletion
