@@ -72,7 +72,8 @@ const TeamFeedback = () => {
                             question.options.find(
                               (option) =>
                                 option.value ===
-                                selectedSubmission?.responses[index]?.answer,
+                                selectedSubmission?.responses[index]?.response
+                                  ?.answer,
                             )?.label
                           }
                         </>
@@ -83,7 +84,8 @@ const TeamFeedback = () => {
                           <Scale
                             viewOnly={true}
                             selectedScore={Number(
-                              selectedSubmission?.responses[index]?.answer,
+                              selectedSubmission?.responses[index]?.response
+                                ?.answer,
                             )}
                           />
                         )}
@@ -91,7 +93,12 @@ const TeamFeedback = () => {
 
                       {question.type === 'text' && (
                         <div className={styles.textResponseContainer}>
-                          <>{selectedSubmission?.responses[index]?.answer}</>
+                          <>
+                            {
+                              selectedSubmission?.responses[index]?.response
+                                ?.answer
+                            }
+                          </>
                         </div>
                       )}
 

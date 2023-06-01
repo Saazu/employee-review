@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { ResponseContext } from '../context/ResponseProvider'
+import { SubmissionContext } from '../context/ResponseProvider'
 import { AccountContext } from '../context/AccountProvider'
 
 function useSubmissions() {
   const currentUser = React.useContext(AccountContext)
-  const allSumbissions = React.useContext(ResponseContext)
+  const allSumbissions = React.useContext(SubmissionContext)
 
   const feedbackRecived = allSumbissions.filter(
     (submission) => submission.receiver.id === currentUser?.id,

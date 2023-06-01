@@ -1,11 +1,11 @@
 import * as React from 'react'
 import styles from './scale.module.css'
-import { NewAnswer } from '../../context/ResponseProvider'
+import { Response } from '../../context/ResponseProvider'
 
 type Props = {
   maxValue?: number
   selectedScore?: number
-  onSelectScore?: (score: NewAnswer) => void
+  onSelectScore?: (score: Response) => void
   viewOnly?: boolean
 }
 
@@ -32,7 +32,7 @@ const Scale = (props: Props) => {
   }
 
   function handleScoreSelect(value: number) {
-    const newResponse: NewAnswer = {
+    const newResponse: Response = {
       type: 'scale',
       answer: value,
     }

@@ -1,29 +1,38 @@
 import * as React from 'react'
 import { UserT } from './types'
+import { QuestionT, Question2T } from './QuestionProvider'
 
-export type NewAnswer = {
+export type Response = {
   type: 'scale' | 'text' | 'multipleChoice'
   answer: number | string
 }
 
-export type Submission = {
+export type Answer = {
+  response: Response | null
+  question: QuestionT | Question2T
+}
+
+export type CompleteSubmission = {
   giver: UserT
   receiver: UserT
-  responses: NewAnswer[]
+  responses: Answer[]
 }
 
-type DispatchResponseContextT = any
+type DispatchSubmissionContextT = any
 
-export const DispatchResponseContext =
-  React.createContext<DispatchResponseContextT | null>(null)
-export const ResponseContext = React.createContext<Submission[]>([])
+export const DispatchSubmissionContext =
+  React.createContext<DispatchSubmissionContextT | null>(null)
+export const SubmissionContext = React.createContext<CompleteSubmission[]>([])
 
-type SetResponsesT = {
+type SetSubmissionsT = {
   action: 'set'
-  payload: Submission[]
+  payload: CompleteSubmission[]
 }
 
-const reducer = (state: Submission[], update: SetResponsesT): Submission[] => {
+const reducer = (
+  state: CompleteSubmission[],
+  update: SetSubmissionsT,
+): CompleteSubmission[] => {
   if (update.action === 'set') {
     return update.payload
   }
@@ -36,11 +45,11 @@ const UIProvider = ({ children }: { children: React.ReactNode }): any => {
   console.log('responses', state)
 
   return (
-    <DispatchResponseContext.Provider value={dispatch}>
-      <ResponseContext.Provider value={state}>
+    <DispatchSubmissionContext.Provider value={dispatch}>
+      <SubmissionContext.Provider value={state}>
         {children}
-      </ResponseContext.Provider>
-    </DispatchResponseContext.Provider>
+      </SubmissionContext.Provider>
+    </DispatchSubmissionContext.Provider>
   )
 }
 

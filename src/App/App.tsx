@@ -10,7 +10,7 @@ import http from '../common/http'
 import NotFound from '../views/NotFound'
 import ReviewFeedback from '../views/ReviewFeedback'
 import { AccountContext } from '../context/AccountProvider'
-import { ResponseContext } from '../context/ResponseProvider'
+import { SubmissionContext } from '../context/ResponseProvider'
 import PrivateRoute from '../components/Routing/PrivateRoute'
 import NewFeedback from '../views/NewFeedback'
 import SubmissionCompletion from '../views/SubmissionCompletion'
@@ -18,7 +18,7 @@ import TeamFeedback from '../views/TeamFeedback'
 
 const App = () => {
   const currentUser = React.useContext(AccountContext)
-  const responses = React.useContext(ResponseContext)
+  const responses = React.useContext(SubmissionContext)
   const userDispatch = React.useContext(DispatchUserContext)
   const questionDispatch = React.useContext(DispatchQuestionContext)
   const isLoggedIn = currentUser != null

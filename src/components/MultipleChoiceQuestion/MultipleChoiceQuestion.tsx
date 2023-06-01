@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styles from './multipleChoiceQuestion.module.css'
-import { NewAnswer } from '../../context/ResponseProvider'
+import { Response } from '../../context/ResponseProvider'
 
 type Props = {
   selectedValue?: number
@@ -8,7 +8,7 @@ type Props = {
     label: string
     value: number
   }[]
-  onOptionSelect: (value: NewAnswer) => void
+  onOptionSelect: (value: Response) => void
 }
 
 const MultipleChoiceQuestion = (props: Props) => {
@@ -18,7 +18,7 @@ const MultipleChoiceQuestion = (props: Props) => {
   )
 
   function handleOptionSelection(value: number) {
-    const newResponse: NewAnswer = {
+    const newResponse: Response = {
       type: 'multipleChoice',
       answer: value,
     }

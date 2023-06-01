@@ -11,7 +11,7 @@ import Button from '../../components/Button/Button'
 import TextResponse from '../../components/TextResponse/TextResponse'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import useGiveFeedbackWizard from '../../hooks/useGiveFeedbackWizard'
-import { NewAnswer } from '../../context/ResponseProvider'
+import { Response } from '../../context/ResponseProvider'
 
 type LocationState = {
   giver: UserT
@@ -31,7 +31,7 @@ const NewFeedback = () => {
     currentQuestionIndex,
     completeSubmission,
     saveResponse,
-    responses,
+    answers,
   } = useGiveFeedbackWizard(giver, receiver, questions)
 
   function handleNextClick() {
@@ -53,11 +53,11 @@ const NewFeedback = () => {
     }
   }
 
-  function saveAnswer(newResponse: NewAnswer | null) {
+  function saveAnswer(newResponse: Response | null) {
     saveResponse(currentQuestionIndex, newResponse)
   }
 
-  function formatSavedText(previousAnswer: NewAnswer | null) {
+  function formatSavedText(previousAnswer: Response | null) {
     if (!previousAnswer) {
       return ''
     } else {
@@ -95,7 +95,7 @@ const NewFeedback = () => {
               {currentQuestion.type === 'multipleChoice' && (
                 <MultipleChoiceQuestion
                   selectedValue={Number(
-                    responses[currentQuestionIndex]?.answer,
+                    answers[currentQuestionIndex]?.response?.answer,
                   )}
                   options={currentQuestion.options}
                   onOptionSelect={saveAnswer}
@@ -106,7 +106,7 @@ const NewFeedback = () => {
                 <div className={styles.scaleInputContainer}>
                   <Scale
                     selectedScore={Number(
-                      responses[currentQuestionIndex]?.answer,
+                      answers[currentQuestionIndex]?.response?.answer,
                     )}
                     onSelectScore={saveAnswer}
                   />
@@ -116,7 +116,9 @@ const NewFeedback = () => {
               {currentQuestion.type === 'text' && (
                 <div className={styles.textResponseContainer}>
                   <TextResponse
-                    savedText={formatSavedText(responses[currentQuestionIndex])}
+                    savedText={formatSavedText(
+                      answers[currentQuestionIndex]?.response || null,
+                    )}
                     handleResponseChange={saveAnswer}
                   />
                 </div>
@@ -144,9 +146,10 @@ const NewFeedback = () => {
                 secondary
                 onClick={handleNextClick}
                 disabled={
-                  responses[currentQuestionIndex] === null ||
-                  responses[currentQuestionIndex]?.answer.toString().trim() ===
-                    ''
+                  answers[currentQuestionIndex] === null ||
+                  answers[currentQuestionIndex]?.response?.answer
+                    .toString()
+                    .trim() === ''
                 }
               >
                 Next

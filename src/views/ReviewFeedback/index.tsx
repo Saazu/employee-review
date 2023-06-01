@@ -74,7 +74,8 @@ const ReviewFeedback = () => {
                             question.options.find(
                               (option) =>
                                 option.value ===
-                                selectedSubmission?.responses[index]?.answer,
+                                selectedSubmission?.responses[index]?.response
+                                  ?.answer,
                             )?.label
                           }
                         </>
@@ -85,7 +86,8 @@ const ReviewFeedback = () => {
                           <Scale
                             viewOnly={true}
                             selectedScore={Number(
-                              selectedSubmission?.responses[index]?.answer,
+                              selectedSubmission?.responses[index]?.response
+                                ?.answer,
                             )}
                           />
                         )}
@@ -93,7 +95,12 @@ const ReviewFeedback = () => {
 
                       {question.type === 'text' && (
                         <div className={styles.textResponseContainer}>
-                          <>{selectedSubmission?.responses[index]?.answer}</>
+                          <>
+                            {
+                              selectedSubmission?.responses[index]?.response
+                                ?.answer
+                            }
+                          </>
                         </div>
                       )}
 
