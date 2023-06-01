@@ -46,6 +46,7 @@ function useGiveFeedbackWizard(
 
   function completeSubmission() {
     const newUserSubmission = {
+      id: allSumbissions.length + 1,
       giver,
       receiver,
       responses: answers,
@@ -57,7 +58,6 @@ function useGiveFeedbackWizard(
     })
   }
 
-  console.log('Current responses', answers)
   return {
     currentQuestion,
     goToNextQuestion,

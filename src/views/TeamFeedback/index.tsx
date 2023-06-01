@@ -8,22 +8,27 @@ import { QuestionContext } from '../../context/QuestionProvider'
 import NoFeedbacDisplay from '../../components/NoFeedbackDisplay/NoFeedbackDisplay'
 import Scale from '../../components/Scale/Scale'
 import classnames from 'classnames'
+import { CompleteSubmission } from '../../context/ResponseProvider'
 
 const TeamFeedback = () => {
   const { feedbackRecived } = useSubmissions()
   const questions = React.useContext(QuestionContext)
-
   const [selectedTeamMember, setSelectedTeamMember] = React.useState<UserT>(
     feedbackRecived[0]?.receiver,
   )
+  const [selectedSubmission, setSelectedSubmission] = React.useState<
+    CompleteSubmission | undefined
+  >(feedbackRecived[0])
 
-  const selectedSubmission = feedbackRecived.find(
-    (sub) => sub.receiver.id === selectedTeamMember.id,
-  )
-  console.log('selected', selectedSubmission)
+  // const selectedSubmission = feedbackRecived.find(
+  //   (sub) => sub.giver.id === selectedTeamMember.id,
+  // )
 
   function viewTeamMemberSubmission(user: UserT) {
-    setSelectedTeamMember({ ...user })
+    setSelectedTeamMember(() => ({ ...user }))
+    setSelectedSubmission(
+      feedbackRecived.find((submission) => submission.receiver.id === user.id),
+    )
   }
 
   return (

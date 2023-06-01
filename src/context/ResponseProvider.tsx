@@ -13,6 +13,7 @@ export type Answer = {
 }
 
 export type CompleteSubmission = {
+  id: number
   giver: UserT
   receiver: UserT
   responses: Answer[]
@@ -42,7 +43,6 @@ const reducer = (
 
 const UIProvider = ({ children }: { children: React.ReactNode }): any => {
   const [state, dispatch] = React.useReducer(reducer, [])
-  console.log('responses', state)
 
   return (
     <DispatchSubmissionContext.Provider value={dispatch}>

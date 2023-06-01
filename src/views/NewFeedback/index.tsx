@@ -43,18 +43,21 @@ const NewFeedback = () => {
     }
   }
 
+  function saveAnswer(newResponse: Response | null) {
+    saveResponse(currentQuestionIndex, newResponse)
+  }
+
   function handleSkip() {
-    saveAnswer(null)
+    saveAnswer({
+      type: questions[currentQuestionIndex].type,
+      answer: -1,
+    })
     if (currentQuestionIndex + 1 === numWizardSteps) {
       completeSubmission()
       push('/share-feedback/complete')
     } else {
       goToNextQuestion()
     }
-  }
-
-  function saveAnswer(newResponse: Response | null) {
-    saveResponse(currentQuestionIndex, newResponse)
   }
 
   function formatSavedText(previousAnswer: Response | null) {
