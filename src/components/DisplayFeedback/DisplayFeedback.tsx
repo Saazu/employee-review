@@ -15,7 +15,7 @@ const DisplayFeedback = (props: Props) => {
     <>
       {feedback?.responses?.map((response) => (
         <React.Fragment
-          key={`${response?.question?.id}-${feedback.receiver.id}`}
+          key={`${response?.question?.id}-${feedback.receiver.id}-${feedback.giver.id}`}
         >
           <li className={styles.responseDisplay}>
             <p className={styles.question}>{response?.question?.label}</p>
