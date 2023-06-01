@@ -16,16 +16,14 @@ const ReviewFeedback = () => {
     feedBackGiven[0]?.receiver,
   )
 
-  const [selectedSubmission, setSelectedSubmission] = React.useState(
-    feedBackGiven.find((sub) => sub.receiver.id === selectedTeamMember.id),
+  const selectedSubmission = feedBackGiven.find(
+    (sub) => sub.receiver.id === selectedTeamMember.id,
   )
-  console.log('Selected submission', selectedSubmission)
+
+  console.log('my submitted selected', selectedSubmission)
 
   function viewTeamMemberSubmission(user: UserT) {
-    setSelectedSubmission(
-      feedBackGiven.find((sub) => sub.receiver.id === user.id),
-    )
-    setSelectedTeamMember(user)
+    setSelectedTeamMember({ ...user })
   }
 
   return (
@@ -73,11 +71,11 @@ const ReviewFeedback = () => {
                       {question.type === 'multipleChoice' && (
                         <>
                           {
-                            question.options[
-                              Number(
+                            question.options.find(
+                              (option) =>
+                                option.value ===
                                 selectedSubmission?.responses[index]?.answer,
-                              )
-                            ]?.label
+                            )?.label
                           }
                         </>
                       )}
@@ -86,7 +84,6 @@ const ReviewFeedback = () => {
                         {question.type === 'scale' && (
                           <Scale
                             viewOnly={true}
-                            onSelectScore={() => console.log('Nein')}
                             selectedScore={Number(
                               selectedSubmission?.responses[index]?.answer,
                             )}

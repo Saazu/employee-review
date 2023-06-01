@@ -1,6 +1,6 @@
 import * as React from 'react'
-import styles from './multipleChoiceQuestion.module.css'
-import { NewAnswer, Submission } from '../../context/ResponseProvider'
+import styles from './displayFeedback.module.css'
+import { Submission } from '../../context/ResponseProvider'
 import { UserT } from '../../context/types'
 import { Question2T, QuestionT } from '../../context/QuestionProvider'
 import classnames from 'classnames'
@@ -10,10 +10,12 @@ import Scale from '../Scale/Scale'
 type Props = {
   feedback: Submission[]
   questions: (Question2T | QuestionT)[]
+  header: string | undefined
+  view: 'teamfeedback' | 'myfeedback'
 }
 
 const DisplayFeedback = (props: Props) => {
-  const { feedback, questions } = props
+  const { feedback, questions, header, view } = props
 
   const [selectedTeamMember, setSelectedTeamMember] = React.useState<UserT>(
     feedback[0].receiver,
@@ -27,65 +29,77 @@ const DisplayFeedback = (props: Props) => {
     setSelectedTeamMember({ ...user })
   }
 
-  console.log('Selected submission', selectedSubmission)
-
   return (
     <div>
-      {feedback.map((feedBackGiven) => (
-        <li
-          className={classnames(styles.user, {
-            [styles.userSelected]:
-              selectedTeamMember.id === feedBackGiven.giver.id,
-          })}
-          key={feedBackGiven.receiver.id}
-          onClick={() => viewTeamMemberSubmission(feedBackGiven.giver)}
-        >
-          <User
-            name={feedBackGiven.giver.name}
-            avatarUrl={feedBackGiven.giver.avatarUrl}
-          />
-        </li>
-      ))}
+      <h1 className={styles.header}>{header}</h1>
+      <div className={styles.feedbackContainer}>
+        <ul className={styles.users}>
+          <li>
+            <h3 className={styles.subHeading}>Feedback given</h3>
+          </li>
+          {feedback.map((f) => (
+            <li
+              className={classnames(styles.user, {
+                [styles.userSelected]: selectedTeamMember.id === f.giver.id,
+              })}
+              key={f.receiver.id}
+              onClick={() => viewTeamMemberSubmission(f.giver)}
+            >
+              <User name={f.giver.name} avatarUrl={f.giver.avatarUrl} />
+            </li>
+          ))}
+        </ul>
 
-      {questions.map((question, index) => (
-        <li className={styles.responseDisplay} key={question.id}>
-          <p className={styles.question}>{question.label}</p>
+        <ul className={styles.feedback}>
+          <li>
+            <h2 className={styles.feedbackSubHeading}>
+              {view === 'myfeedback'
+                ? selectedTeamMember?.name
+                : selectedSubmission?.giver.name}
+              's Feedback
+            </h2>
+          </li>
 
-          <div className={styles.response}>
-            {question.type === 'multipleChoice' && (
-              <>
-                {
-                  question.options[
-                    Number(selectedSubmission?.responses[index]?.answer)
-                  ]?.label
-                }
-              </>
-            )}
+          {questions.map((question, index) => (
+            <li className={styles.responseDisplay} key={question.id}>
+              <p className={styles.question}>{question.label}</p>
 
-            <div className={styles.scaleInputContainer}>
-              {question.type === 'scale' && (
-                <Scale
-                  viewOnly={true}
-                  onSelectScore={() => console.log('Nein')}
-                  selectedScore={Number(
-                    selectedSubmission?.responses[index]?.answer,
+              <div className={styles.response}>
+                {question.type === 'multipleChoice' && (
+                  <>
+                    {
+                      question.options[
+                        Number(selectedSubmission?.responses[index]?.answer)
+                      ]?.label
+                    }
+                  </>
+                )}
+
+                <div className={styles.scaleInputContainer}>
+                  {question.type === 'scale' && (
+                    <Scale
+                      viewOnly={true}
+                      selectedScore={Number(
+                        selectedSubmission?.responses[index]?.answer,
+                      )}
+                    />
                   )}
-                />
-              )}
-            </div>
+                </div>
 
-            {question.type === 'text' && (
-              <div className={styles.textResponseContainer}>
-                <>{selectedSubmission?.responses[index]?.answer}</>
+                {question.type === 'text' && (
+                  <div className={styles.textResponseContainer}>
+                    <>{selectedSubmission?.responses[index]?.answer}</>
+                  </div>
+                )}
+
+                {selectedSubmission?.responses[index] === null && (
+                  <span className={styles.skipTag}>SKIPPED</span>
+                )}
               </div>
-            )}
-
-            {selectedSubmission?.responses[index] === null && (
-              <span className={styles.skipTag}>SKIPPED</span>
-            )}
-          </div>
-        </li>
-      ))}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }

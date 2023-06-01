@@ -12,21 +12,17 @@ import classnames from 'classnames'
 const TeamFeedback = () => {
   const { feedbackRecived } = useSubmissions()
   const questions = React.useContext(QuestionContext)
+
   const [selectedTeamMember, setSelectedTeamMember] = React.useState<UserT>(
     feedbackRecived[0]?.receiver,
   )
 
-  console.log('Feedback received', feedbackRecived)
-
-  const [selectedSubmission, setSelectedSubmission] = React.useState(
-    feedbackRecived.find((sub) => sub.receiver.id === selectedTeamMember.id),
+  const selectedSubmission = feedbackRecived.find(
+    (sub) => sub.receiver.id === selectedTeamMember.id,
   )
-  console.log('Selected submission', selectedSubmission)
+  console.log('selected', selectedSubmission)
 
   function viewTeamMemberSubmission(user: UserT) {
-    setSelectedSubmission(
-      feedbackRecived.find((sub) => sub.receiver.id === user.id),
-    )
     setSelectedTeamMember({ ...user })
   }
 
@@ -73,11 +69,11 @@ const TeamFeedback = () => {
                       {question.type === 'multipleChoice' && (
                         <>
                           {
-                            question.options[
-                              Number(
+                            question.options.find(
+                              (option) =>
+                                option.value ===
                                 selectedSubmission?.responses[index]?.answer,
-                              )
-                            ]?.label
+                            )?.label
                           }
                         </>
                       )}
@@ -86,7 +82,6 @@ const TeamFeedback = () => {
                         {question.type === 'scale' && (
                           <Scale
                             viewOnly={true}
-                            onSelectScore={() => console.log('Nein')}
                             selectedScore={Number(
                               selectedSubmission?.responses[index]?.answer,
                             )}

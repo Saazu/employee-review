@@ -21,6 +21,8 @@ const Scale = (props: Props) => {
     selectedScore ? selectedScore : 0,
   )
 
+  console.log('Score', currentScore)
+
   function handleHover(event: React.MouseEvent<HTMLButtonElement>) {
     setScoreHoverOn(Number(event.currentTarget.value) + 1)
   }
