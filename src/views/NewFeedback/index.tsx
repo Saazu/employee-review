@@ -12,6 +12,7 @@ import TextResponse from '../../components/TextResponse/TextResponse'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import useGiveFeedbackWizard from '../../hooks/useGiveFeedbackWizard'
 import { Response } from '../../context/ResponseProvider'
+import { ReactComponent as BackIcon } from '../../icons/CaratLeft.svg'
 
 type LocationState = {
   giver: UserT
@@ -72,12 +73,15 @@ const NewFeedback = () => {
     <MainLayout loggedIn>
       <div className={styles.wrapper}>
         <div className={styles.container}>
-          <div
+          <button
             onClick={() => push('/share-feedback')}
             className={styles.backButton}
           >
-            BACK
-          </div>
+            <div>
+              <BackIcon />
+            </div>
+            <p className={styles.back}>BACK</p>
+          </button>
           <div className={styles.header}>
             <section>
               <h2 className={styles.question}>{currentQuestion.label}</h2>
