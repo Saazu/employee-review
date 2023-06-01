@@ -52,15 +52,17 @@ const ReviewFeedback = () => {
                 ))}
               </ul>
 
-              <ul className={styles.feedback}>
-                <li>
-                  <h2 className={styles.feedbackSubHeading}>
-                    {selectedSubmission?.receiver.name}'s Feedback
-                  </h2>
-                </li>
+              <section>
+                <ul className={styles.feedback}>
+                  <li>
+                    <h2 className={styles.feedbackSubHeading}>
+                      {selectedSubmission?.receiver.name}'s Feedback
+                    </h2>
+                  </li>
 
-                <DisplayFeedback feedback={selectedSubmission} />
-              </ul>
+                  <DisplayFeedback feedback={selectedSubmission} />
+                </ul>
+              </section>
             </div>
           </div>
         ) : (

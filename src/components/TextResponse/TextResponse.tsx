@@ -26,11 +26,16 @@ const TextResponse = (props: Props) => {
 
   return (
     <textarea
+      aria-label="Text response"
       disabled={disabled}
       className={styles.input}
       placeholder="Say something"
+      aria-placeholder="Say something"
+      aria-multiline="true"
       value={responseText}
       onChange={handleTextInput}
+      required
+      autoFocus
     ></textarea>
   )
 }

@@ -2,6 +2,7 @@ import * as React from 'react'
 import styles from './displayFeedback.module.css'
 import Scale from '../Scale/Scale'
 import { CompleteSubmission } from '../../context/ResponseProvider'
+import classnames from 'classnames'
 
 type Props = {
   feedback: CompleteSubmission //Submission[]
@@ -9,7 +10,6 @@ type Props = {
 
 const DisplayFeedback = (props: Props) => {
   const { feedback } = props
-  console.log('Feedback', feedback)
 
   return feedback ? (
     <>
@@ -18,9 +18,10 @@ const DisplayFeedback = (props: Props) => {
           key={`${response?.question?.id}-${feedback.receiver.id}-${feedback.giver.id}`}
         >
           <li className={styles.responseDisplay}>
-            <p className={styles.question}>{response?.question?.label}</p>
-
-            <div className={styles.response}>
+            <h4 className={classnames(styles.question, styles.responseText)}>
+              {response?.question?.label}
+            </h4>
+            <div className={classnames(styles.response, styles.responseText)}>
               {response?.response?.answer !== -1 ? (
                 <>
                   {response?.question?.type === 'multipleChoice' && (

@@ -85,3 +85,7 @@
   font-size: var(--fs-base);
   line-height: var(--fs-l);
 }
+
+.user {
+  margin-left: var(--fs-base);
+}

@@ -42,10 +42,18 @@ const MultipleChoiceQuestion = (props: Props) => {
     }
   }
 
+  function handleEnterKeyPress(event: React.KeyboardEvent, value: number) {
+    if (event.key === 'Enter') {
+      handleOptionSelection(value)
+    }
+  }
+
   return (
     <div className={styles.container}>
       {options.map((option, i) => (
         <p
+          role="button"
+          tabIndex={0}
           style={{
             backgroundColor: `var(${backgroundColor(i + 1)})`,
             color: `var(${textColor(i + 1)})`,
@@ -53,6 +61,7 @@ const MultipleChoiceQuestion = (props: Props) => {
           key={option.value}
           className={styles.option}
           onClick={() => handleOptionSelection(i + 1)}
+          onKeyDown={(event) => handleEnterKeyPress(event, i + 1)}
         >
           {option.label}
         </p>

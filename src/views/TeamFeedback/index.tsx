@@ -38,7 +38,7 @@ const TeamFeedback = () => {
                       [styles.userSelected]:
                         selectedSubmission?.giver.id === submission.giver.id,
                     })}
-                    key={submission.receiver.id}
+                    key={submission.giver.id}
                     onClick={() => viewTeamMemberSubmission(submission.giver)}
                   >
                     <User

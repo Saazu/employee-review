@@ -20,7 +20,7 @@ const GiveFeedback = () => {
 
   return (
     <MainLayout loggedIn>
-      <div className={styles.wrapper}>
+      <section className={styles.wrapper}>
         <h1>Share Feedback</h1>
 
         {usersToDisplay && usersToDisplay.length > 0 && (
@@ -45,7 +45,7 @@ const GiveFeedback = () => {
               ))}
           </ul>
         )}
-      </div>
+      </section>
     </MainLayout>
   )
 }

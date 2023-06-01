@@ -48,6 +48,12 @@ const Scale = (props: Props) => {
     }
   }
 
+  function handleEnterKeyPress(event: React.KeyboardEvent, value: number) {
+    if (event.key === 'Enter') {
+      handleScoreSelect(value)
+    }
+  }
+
   return (
     <div
       style={{
@@ -59,6 +65,9 @@ const Scale = (props: Props) => {
     >
       {new Array(maxValue).fill(0).map((_, i) => (
         <button
+          type="button"
+          id="setScore"
+          aria-label={(i + 1).toString()}
           style={{
             backgroundColor: `var(${backGroundColor(i + 1)})`,
             border: `1px solid var(${backGroundColor(i + 1)})`,
@@ -67,10 +76,12 @@ const Scale = (props: Props) => {
           }}
           onMouseOver={handleHover}
           onClick={() => handleScoreSelect(i + 1)}
+          onKeyDown={(event) => handleEnterKeyPress(event, i + 1)}
           value={i}
           key={i + 1}
           className={styles.box}
           disabled={viewOnly}
+          tabIndex={0}
         ></button>
       ))}
     </div>

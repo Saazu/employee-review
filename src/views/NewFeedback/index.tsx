@@ -85,7 +85,7 @@ const NewFeedback = () => {
                 SHARE YOUR FEEDBACK FOR {receiver.name.toUpperCase()}
               </p>
             </section>
-            <div>
+            <div className={styles.user}>
               <User
                 name={receiver.name}
                 avatarUrl={receiver.avatarUrl}
