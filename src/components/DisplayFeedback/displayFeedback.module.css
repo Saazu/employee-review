@@ -59,7 +59,7 @@
 }
 
 .responseText {
-  font-weight: 600 !important;
+  font-weight: var(--fw-semibold) !important;
   font-size: var(--fs-smBase) !important;
   line-height: var(--fs-l) !important;
   font-weight: var(--fw-semibold);
