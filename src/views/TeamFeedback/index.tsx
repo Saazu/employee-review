@@ -9,7 +9,6 @@ import classnames from 'classnames'
 import { CompleteSubmission } from '../../context/ResponseProvider'
 import DisplayFeedback from '../../components/DisplayFeedback/DisplayFeedback'
 import Tag from '../../components/Tag/Tag'
-import { text } from 'msw/lib/types/context'
 
 const TeamFeedback = () => {
   const { feedbackRecived } = useSubmissions()
@@ -47,7 +46,7 @@ const TeamFeedback = () => {
                       name={submission.giver.name}
                       avatarUrl={submission.giver.avatarUrl}
                     />
-                    <span>
+                    <span className={styles.tag}>
                       <Tag
                         text={'new'}
                         backgroundColor="var(--primaryColor)"

@@ -24,10 +24,14 @@ function useGiveFeedbackWizard(
   const [currentQuestionIndex, setCurrentQuestionIndex] =
     React.useState<number>(0)
   const currentQuestion = questions[currentQuestionIndex]
+  const [submissionComplete, setSubmissionComplete] =
+    React.useState<boolean>(false)
 
   function goToNextQuestion() {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prevValue) => prevValue + 1)
+    } else {
+      setSubmissionComplete(true)
     }
   }
 
@@ -67,15 +71,16 @@ function useGiveFeedbackWizard(
       action: 'set',
       payload: updatedSummissions,
     })
+    setSubmissionComplete(true)
   }
 
   React.useEffect(() => {
-    if (answers.every(Boolean)) {
+    if (submissionComplete) {
       completeSubmission()
       push('/share-feedback/complete')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [answers])
+  }, [submissionComplete])
 
   return {
     currentQuestion,
