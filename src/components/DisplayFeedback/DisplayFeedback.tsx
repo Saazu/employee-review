@@ -3,6 +3,7 @@ import styles from './displayFeedback.module.css'
 import Scale from '../Scale/Scale'
 import { CompleteSubmission } from '../../context/ResponseProvider'
 import classnames from 'classnames'
+import Tag from '../Tag/Tag'
 
 type Props = {
   feedback: CompleteSubmission //Submission[]
@@ -51,7 +52,11 @@ const DisplayFeedback = (props: Props) => {
                 </>
               ) : (
                 <>
-                  <span className={styles.skipTag}>SKIPPED</span>
+                  <Tag
+                    text="Skipped"
+                    backgroundColor="var(--disabledColor)"
+                    textColor="var(--white)"
+                  />
                 </>
               )}
             </div>

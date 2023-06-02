@@ -8,6 +8,7 @@ import NoFeedbacDisplay from '../../components/NoFeedbackDisplay/NoFeedbackDispl
 import classnames from 'classnames'
 import { CompleteSubmission } from '../../context/ResponseProvider'
 import DisplayFeedback from '../../components/DisplayFeedback/DisplayFeedback'
+import Tag from '../../components/Tag/Tag'
 
 const ReviewFeedback = () => {
   const { feedBackGiven } = useSubmissions()
@@ -48,6 +49,13 @@ const ReviewFeedback = () => {
                       name={submission.receiver.name}
                       avatarUrl={submission.receiver.avatarUrl}
                     />
+                    <span className={styles.tag}>
+                      <Tag
+                        text={'new'}
+                        backgroundColor="var(--primaryColor)"
+                        textColor="var(--white)"
+                      />
+                    </span>
                   </li>
                 ))}
               </ul>

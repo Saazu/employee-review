@@ -8,6 +8,8 @@ import NoFeedbacDisplay from '../../components/NoFeedbackDisplay/NoFeedbackDispl
 import classnames from 'classnames'
 import { CompleteSubmission } from '../../context/ResponseProvider'
 import DisplayFeedback from '../../components/DisplayFeedback/DisplayFeedback'
+import Tag from '../../components/Tag/Tag'
+import { text } from 'msw/lib/types/context'
 
 const TeamFeedback = () => {
   const { feedbackRecived } = useSubmissions()
@@ -45,6 +47,13 @@ const TeamFeedback = () => {
                       name={submission.giver.name}
                       avatarUrl={submission.giver.avatarUrl}
                     />
+                    <span>
+                      <Tag
+                        text={'new'}
+                        backgroundColor="var(--primaryColor)"
+                        textColor="var(--white)"
+                      />
+                    </span>
                   </li>
                 ))}
               </ul>
