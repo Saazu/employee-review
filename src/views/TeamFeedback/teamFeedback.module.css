@@ -91,3 +91,7 @@
   font-size: var(--fs-xxl);
   line-height: var(--fs-xxxl);
 }
+
+li:not(:last-child) .tag{
+  display: none;
+}

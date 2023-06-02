@@ -30,6 +30,9 @@
 
 
 .user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   color: var(--darkGrey);
   font-weight: var(--fw-semibold);
   font-size: var(--fs-base);
@@ -91,4 +94,8 @@
   font-weight: var(--fw-semibold);
   font-size: var(--fs-xxl);
   line-height: var(--fs-xxxl);
+}
+
+li:not(:last-child) .tag{
+  display: none;
 }
