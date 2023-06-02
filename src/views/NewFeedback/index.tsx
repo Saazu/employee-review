@@ -11,7 +11,8 @@ import Button from '../../components/Button/Button'
 import TextResponse from '../../components/TextResponse/TextResponse'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import useGiveFeedbackWizard from '../../hooks/useGiveFeedbackWizard'
-import { NewAnswer } from '../../context/ResponseProvider'
+import { Response } from '../../context/ResponseProvider'
+import { ReactComponent as BackIcon } from '../../icons/CaratLeft.svg'
 
 type LocationState = {
   giver: UserT
@@ -31,7 +32,7 @@ const NewFeedback = () => {
     currentQuestionIndex,
     completeSubmission,
     saveResponse,
-    responses,
+    answers,
   } = useGiveFeedbackWizard(giver, receiver, questions)
 
   function handleNextClick() {
@@ -43,8 +44,15 @@ const NewFeedback = () => {
     }
   }
 
+  function saveAnswer(newResponse: Response | null) {
+    saveResponse(currentQuestionIndex, newResponse)
+  }
+
   function handleSkip() {
-    saveAnswer(null)
+    saveAnswer({
+      type: questions[currentQuestionIndex].type,
+      answer: -1,
+    })
     if (currentQuestionIndex + 1 === numWizardSteps) {
       completeSubmission()
       push('/share-feedback/complete')
@@ -53,11 +61,7 @@ const NewFeedback = () => {
     }
   }
 
-  function saveAnswer(newResponse: NewAnswer | null) {
-    saveResponse(currentQuestionIndex, newResponse)
-  }
-
-  function formatSavedText(previousAnswer: NewAnswer | null) {
+  function formatSavedText(previousAnswer: Response | null) {
     if (!previousAnswer) {
       return ''
     } else {
@@ -69,12 +73,15 @@ const NewFeedback = () => {
     <MainLayout loggedIn>
       <div className={styles.wrapper}>
         <div className={styles.container}>
-          <div
+          <button
             onClick={() => push('/share-feedback')}
             className={styles.backButton}
           >
-            BACK
-          </div>
+            <div>
+              <BackIcon />
+            </div>
+            <p className={styles.back}>BACK</p>
+          </button>
           <div className={styles.header}>
             <section>
               <h2 className={styles.question}>{currentQuestion.label}</h2>
@@ -82,7 +89,7 @@ const NewFeedback = () => {
                 SHARE YOUR FEEDBACK FOR {receiver.name.toUpperCase()}
               </p>
             </section>
-            <div>
+            <div className={styles.user}>
               <User
                 name={receiver.name}
                 avatarUrl={receiver.avatarUrl}
@@ -95,7 +102,7 @@ const NewFeedback = () => {
               {currentQuestion.type === 'multipleChoice' && (
                 <MultipleChoiceQuestion
                   selectedValue={Number(
-                    responses[currentQuestionIndex]?.answer,
+                    answers[currentQuestionIndex]?.response?.answer,
                   )}
                   options={currentQuestion.options}
                   onOptionSelect={saveAnswer}
@@ -106,7 +113,7 @@ const NewFeedback = () => {
                 <div className={styles.scaleInputContainer}>
                   <Scale
                     selectedScore={Number(
-                      responses[currentQuestionIndex]?.answer,
+                      answers[currentQuestionIndex]?.response?.answer,
                     )}
                     onSelectScore={saveAnswer}
                   />
@@ -116,7 +123,9 @@ const NewFeedback = () => {
               {currentQuestion.type === 'text' && (
                 <div className={styles.textResponseContainer}>
                   <TextResponse
-                    savedText={formatSavedText(responses[currentQuestionIndex])}
+                    savedText={formatSavedText(
+                      answers[currentQuestionIndex]?.response || null,
+                    )}
                     handleResponseChange={saveAnswer}
                   />
                 </div>
@@ -144,9 +153,10 @@ const NewFeedback = () => {
                 secondary
                 onClick={handleNextClick}
                 disabled={
-                  responses[currentQuestionIndex] === null ||
-                  responses[currentQuestionIndex]?.answer.toString().trim() ===
-                    ''
+                  answers[currentQuestionIndex] === null ||
+                  answers[currentQuestionIndex]?.response?.answer
+                    .toString()
+                    .trim() === ''
                 }
               >
                 Next

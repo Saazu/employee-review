@@ -1,9 +1,9 @@
 import * as React from 'react'
 import styles from './textResponse.module.css'
-import { NewAnswer } from '../../context/ResponseProvider'
+import { Response } from '../../context/ResponseProvider'
 
 type Props = {
-  handleResponseChange: (response: NewAnswer) => void
+  handleResponseChange: (response: Response) => void
   disabled?: boolean
   savedText?: string | null
 }
@@ -17,7 +17,7 @@ const TextResponse = (props: Props) => {
   function handleTextInput(event: React.FormEvent<HTMLTextAreaElement>) {
     const updatedText = event.currentTarget.value
     setResponsetext(updatedText)
-    const newResponse: NewAnswer = {
+    const newResponse: Response = {
       type: 'text',
       answer: updatedText.trim(),
     }
@@ -26,11 +26,16 @@ const TextResponse = (props: Props) => {
 
   return (
     <textarea
+      aria-label="Text response"
       disabled={disabled}
       className={styles.input}
       placeholder="Say something"
+      aria-placeholder="Say something"
+      aria-multiline="true"
       value={responseText}
       onChange={handleTextInput}
+      required
+      autoFocus
     ></textarea>
   )
 }

@@ -43,6 +43,7 @@ const Header = () => {
         )}
       </NavLink>
       <span className={styles.spacer} />
+
       <NavLink exact to="/" onClick={handleLogout}>
         {currentUser && (
           <User

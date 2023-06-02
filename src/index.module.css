@@ -20,8 +20,10 @@
   /* TYPOGRAPHY */
   --font-family: sans-serif;
   --fs-sm: 0.75rem;
+  --fs-smBase: 0.875;
   --fs-base: 1rem;
   --fs-l: 1.25rem;
+  --fs-sl: 1.375;
   --fs-xl: 1.75rem;
   --fs-xxl: 2rem;
   --fs-xxxl: 2.5rem;

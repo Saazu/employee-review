@@ -62,13 +62,23 @@
 .scaleInputContainer {
  width: 100%;
 }
-
 .backButton {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+}
+
+.back {
   font-weight: var(--fw-bold);
   font-size: var(--fs-sm);
   line-height: var( --fs-base);
   color: var(--darkGrey);
   cursor: pointer;
+  margin-left: 0.5rem;
+  margin-top: 0.25rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 
 .questionTrackerHeader {
@@ -84,4 +94,8 @@
   color: var(--offBlack);
   font-size: var(--fs-base);
   line-height: var(--fs-l);
+}
+
+.user {
+  margin-left: var(--fs-base);
 }

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styles from './multipleChoiceQuestion.module.css'
-import { NewAnswer } from '../../context/ResponseProvider'
+import { Response } from '../../context/ResponseProvider'
 
 type Props = {
   selectedValue?: number
@@ -8,7 +8,7 @@ type Props = {
     label: string
     value: number
   }[]
-  onOptionSelect: (value: NewAnswer) => void
+  onOptionSelect: (value: Response) => void
 }
 
 const MultipleChoiceQuestion = (props: Props) => {
@@ -18,7 +18,7 @@ const MultipleChoiceQuestion = (props: Props) => {
   )
 
   function handleOptionSelection(value: number) {
-    const newResponse: NewAnswer = {
+    const newResponse: Response = {
       type: 'multipleChoice',
       answer: value,
     }
@@ -42,10 +42,18 @@ const MultipleChoiceQuestion = (props: Props) => {
     }
   }
 
+  function handleEnterKeyPress(event: React.KeyboardEvent, value: number) {
+    if (event.key === 'Enter') {
+      handleOptionSelection(value)
+    }
+  }
+
   return (
     <div className={styles.container}>
       {options.map((option, i) => (
         <p
+          role="button"
+          tabIndex={0}
           style={{
             backgroundColor: `var(${backgroundColor(i + 1)})`,
             color: `var(${textColor(i + 1)})`,
@@ -53,6 +61,7 @@ const MultipleChoiceQuestion = (props: Props) => {
           key={option.value}
           className={styles.option}
           onClick={() => handleOptionSelection(i + 1)}
+          onKeyDown={(event) => handleEnterKeyPress(event, i + 1)}
         >
           {option.label}
         </p>

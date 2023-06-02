@@ -36,8 +36,8 @@
 .user {
   color: var(--darkGrey);
   font-weight: 600;
-  font-size: 16px;
-  line-height: 22px;
+  font-size: var(--fs-base);
+  line-height: var(--fs-sl);
   cursor: pointer; 
 }
 
@@ -54,8 +54,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
-  line-height: 19px;
+  font-size: var(--fs-smBase);
+  line-height: var(--fs-l);
   color: var(--black);
   
 }

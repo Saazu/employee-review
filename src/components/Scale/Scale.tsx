@@ -1,11 +1,11 @@
 import * as React from 'react'
 import styles from './scale.module.css'
-import { NewAnswer } from '../../context/ResponseProvider'
+import { Response } from '../../context/ResponseProvider'
 
 type Props = {
   maxValue?: number
   selectedScore?: number
-  onSelectScore?: (score: NewAnswer) => void
+  onSelectScore?: (score: Response) => void
   viewOnly?: boolean
 }
 
@@ -21,8 +21,6 @@ const Scale = (props: Props) => {
     selectedScore ? selectedScore : 0,
   )
 
-  console.log('Score', currentScore)
-
   function handleHover(event: React.MouseEvent<HTMLButtonElement>) {
     setScoreHoverOn(Number(event.currentTarget.value) + 1)
   }
@@ -32,7 +30,7 @@ const Scale = (props: Props) => {
   }
 
   function handleScoreSelect(value: number) {
-    const newResponse: NewAnswer = {
+    const newResponse: Response = {
       type: 'scale',
       answer: value,
     }
@@ -50,6 +48,12 @@ const Scale = (props: Props) => {
     }
   }
 
+  function handleEnterKeyPress(event: React.KeyboardEvent, value: number) {
+    if (event.key === 'Enter') {
+      handleScoreSelect(value)
+    }
+  }
+
   return (
     <div
       style={{
@@ -61,6 +65,9 @@ const Scale = (props: Props) => {
     >
       {new Array(maxValue).fill(0).map((_, i) => (
         <button
+          type="button"
+          id="setScore"
+          aria-label={(i + 1).toString()}
           style={{
             backgroundColor: `var(${backGroundColor(i + 1)})`,
             border: `1px solid var(${backGroundColor(i + 1)})`,
@@ -69,10 +76,12 @@ const Scale = (props: Props) => {
           }}
           onMouseOver={handleHover}
           onClick={() => handleScoreSelect(i + 1)}
+          onKeyDown={(event) => handleEnterKeyPress(event, i + 1)}
           value={i}
           key={i + 1}
           className={styles.box}
           disabled={viewOnly}
+          tabIndex={0}
         ></button>
       ))}
     </div>

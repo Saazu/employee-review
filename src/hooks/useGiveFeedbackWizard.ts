@@ -1,15 +1,21 @@
 import * as React from 'react'
 import { UserT } from '../context/types'
 import {
-  NewAnswer,
-  DispatchResponseContext,
-  ResponseContext,
+  Answer,
+  DispatchSubmissionContext,
+  SubmissionContext,
+  Response,
 } from '../context/ResponseProvider'
+import { Question2T, QuestionT } from '../context/QuestionProvider'
 
-function useGiveFeedbackWizard(giver: UserT, receiver: UserT, questions: any) {
-  const responseDispatch = React.useContext(DispatchResponseContext)
-  const allSumbissions = React.useContext(ResponseContext)
-  const [responses, setResponses] = React.useState<(NewAnswer | null)[]>(
+function useGiveFeedbackWizard(
+  giver: UserT,
+  receiver: UserT,
+  questions: (QuestionT | Question2T)[],
+) {
+  const responseDispatch = React.useContext(DispatchSubmissionContext)
+  const allSumbissions = React.useContext(SubmissionContext)
+  const [answers, setAnswers] = React.useState<(Answer | null)[]>(
     new Array(questions.length).fill(null),
   )
   const [currentQuestionIndex, setCurrentQuestionIndex] =
@@ -28,17 +34,22 @@ function useGiveFeedbackWizard(giver: UserT, receiver: UserT, questions: any) {
     }
   }
 
-  function saveResponse(questionIndex: number, response: NewAnswer | null) {
-    const updatedResponse = [...responses]
-    updatedResponse[questionIndex] = response
-    setResponses(updatedResponse)
+  function saveResponse(questionIndex: number, response: Response | null) {
+    const newAnswer: Answer = {
+      response: response,
+      question: questions[questionIndex],
+    }
+    const updatedResponse = [...answers]
+    updatedResponse[questionIndex] = newAnswer
+    setAnswers(updatedResponse)
   }
 
   function completeSubmission() {
     const newUserSubmission = {
+      id: allSumbissions.length + 1,
       giver,
       receiver,
-      responses,
+      responses: answers,
     }
     const updatedSummissions = [...allSumbissions, newUserSubmission]
     responseDispatch({
@@ -47,13 +58,12 @@ function useGiveFeedbackWizard(giver: UserT, receiver: UserT, questions: any) {
     })
   }
 
-  console.log('Current responses', responses)
   return {
     currentQuestion,
     goToNextQuestion,
     goToPreviousQuestion,
     saveResponse,
-    responses,
+    answers,
     numWizardSteps: questions.length,
     currentQuestionIndex,
     completeSubmission,
