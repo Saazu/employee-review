@@ -31,8 +31,6 @@ function useSubmissions() {
     })
     .filter((user) => user !== null)
 
-  console.log('All submissions', allSumbissions)
-
   return {
     feedBackGiven,
     feedbackRecived,
