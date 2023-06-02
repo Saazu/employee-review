@@ -7,14 +7,17 @@ import {
   Response,
 } from '../context/ResponseProvider'
 import { Question2T, QuestionT } from '../context/QuestionProvider'
+import deepClone from 'lodash.clonedeep'
+import { useHistory } from 'react-router-dom'
 
 function useGiveFeedbackWizard(
   giver: UserT,
   receiver: UserT,
   questions: (QuestionT | Question2T)[],
 ) {
+  const { push } = useHistory()
   const responseDispatch = React.useContext(DispatchSubmissionContext)
-  const allSumbissions = React.useContext(SubmissionContext)
+  const allSubissions = React.useContext(SubmissionContext)
   const [answers, setAnswers] = React.useState<(Answer | null)[]>(
     new Array(questions.length).fill(null),
   )
@@ -23,18 +26,26 @@ function useGiveFeedbackWizard(
   const currentQuestion = questions[currentQuestionIndex]
 
   function goToNextQuestion() {
-    if (currentQuestionIndex !== questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1)
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((prevValue) => prevValue + 1)
     }
   }
 
   function goToPreviousQuestion() {
     if (currentQuestionIndex !== 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1)
+      setCurrentQuestionIndex((prevValue) => prevValue - 1)
     }
   }
 
-  function saveResponse(questionIndex: number, response: Response | null) {
+  function skipQuestion() {
+    saveResponse(currentQuestionIndex, {
+      type: questions[currentQuestionIndex].type,
+      answer: '',
+    })
+    goToNextQuestion()
+  }
+
+  function saveResponse(questionIndex: number, response: Response) {
     const newAnswer: Answer = {
       response: response,
       question: questions[questionIndex],
@@ -46,27 +57,35 @@ function useGiveFeedbackWizard(
 
   function completeSubmission() {
     const newUserSubmission = {
-      id: allSumbissions.length + 1,
+      id: allSubissions.length + 1,
       giver,
       receiver,
-      responses: answers,
+      responses: deepClone(answers),
     }
-    const updatedSummissions = [...allSumbissions, newUserSubmission]
+    const updatedSummissions = [...allSubissions, newUserSubmission]
     responseDispatch({
       action: 'set',
       payload: updatedSummissions,
     })
   }
 
+  React.useEffect(() => {
+    if (answers.every(Boolean)) {
+      completeSubmission()
+      push('/share-feedback/complete')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answers])
+
   return {
     currentQuestion,
     goToNextQuestion,
     goToPreviousQuestion,
     saveResponse,
+    skipQuestion,
     answers,
     numWizardSteps: questions.length,
     currentQuestionIndex,
-    completeSubmission,
   }
 }
 

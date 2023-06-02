@@ -22,7 +22,7 @@ const DisplayFeedback = (props: Props) => {
               {response?.question?.label}
             </p>
             <div className={classnames(styles.response, styles.responseText)}>
-              {response?.response?.answer !== -1 ? (
+              {response?.response?.answer !== '' ? (
                 <>
                   {response?.question?.type === 'multipleChoice' && (
                     <>

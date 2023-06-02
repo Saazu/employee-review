@@ -30,35 +30,13 @@ const NewFeedback = () => {
     goToPreviousQuestion,
     numWizardSteps,
     currentQuestionIndex,
-    completeSubmission,
     saveResponse,
     answers,
+    skipQuestion,
   } = useGiveFeedbackWizard(giver, receiver, questions)
 
-  function handleNextClick() {
-    if (currentQuestionIndex + 1 === numWizardSteps) {
-      completeSubmission()
-      push('/share-feedback/complete')
-    } else {
-      goToNextQuestion()
-    }
-  }
-
-  function saveAnswer(newResponse: Response | null) {
+  function saveAnswer(newResponse: Response) {
     saveResponse(currentQuestionIndex, newResponse)
-  }
-
-  function handleSkip() {
-    saveAnswer({
-      type: questions[currentQuestionIndex].type,
-      answer: -1,
-    })
-    if (currentQuestionIndex + 1 === numWizardSteps) {
-      completeSubmission()
-      push('/share-feedback/complete')
-    } else {
-      goToNextQuestion()
-    }
   }
 
   function formatSavedText(previousAnswer: Response | null) {
@@ -144,14 +122,14 @@ const NewFeedback = () => {
                 <Button
                   disabled={currentQuestion.required}
                   secondary
-                  onClick={handleSkip}
+                  onClick={skipQuestion}
                 >
                   Skip
                 </Button>
               )}
               <Button
                 secondary
-                onClick={handleNextClick}
+                onClick={goToNextQuestion}
                 disabled={
                   answers[currentQuestionIndex] === null ||
                   answers[currentQuestionIndex]?.response?.answer
