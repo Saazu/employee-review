@@ -47,7 +47,7 @@ const TeamFeedback = () => {
                       name={submission.giver.name}
                       avatarUrl={submission.giver.avatarUrl}
                     />
-                    <span>
+                    <span className={styles.tag}>
                       <Tag
                         text={'new'}
                         backgroundColor="var(--primaryColor)"
