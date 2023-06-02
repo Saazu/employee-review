@@ -30,8 +30,11 @@
 
 
 .user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   color: var(--darkGrey);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   font-size: var(--fs-base);
   line-height: var(--fs-sl);
   cursor: pointer; 
@@ -46,14 +49,17 @@
   background-color: var(--lightGrey);
 }
 
+
 .users,
 .feedback {
   list-style-type: none;
+  overflow: scroll;
+  height: 80vh;
 }
 
 .users {
   border-right: var(--baseBorder);
-  min-height: 70vh;
+  
 }
 
 .users li {
@@ -77,8 +83,12 @@
   border-top: none;
 }
 
-.users li,
+.users li{
+  border-bottom: var(--baseBorder);
+}
+
 .feedback li {
+  border-left: var(--baseBorder);
   border-bottom: var(--baseBorder);
 }
 
