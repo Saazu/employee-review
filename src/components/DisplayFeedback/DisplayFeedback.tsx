@@ -18,9 +18,9 @@ const DisplayFeedback = (props: Props) => {
           key={`${response?.question?.id}-${feedback.receiver.id}-${feedback.giver.id}`}
         >
           <li className={styles.responseDisplay}>
-            <h4 className={classnames(styles.question, styles.responseText)}>
+            <p className={classnames(styles.question, styles.responseText)}>
               {response?.question?.label}
-            </h4>
+            </p>
             <div className={classnames(styles.response, styles.responseText)}>
               {response?.response?.answer !== -1 ? (
                 <>
