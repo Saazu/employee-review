@@ -5,13 +5,13 @@ import { Response } from '../../context/ResponseProvider'
 type Props = {
   handleResponseChange: (response: Response) => void
   disabled?: boolean
-  savedText?: string | null
+  savedText?: string | null | number
 }
 
 const TextResponse = (props: Props) => {
   const { disabled = false, savedText, handleResponseChange } = props
   const [responseText, setResponsetext] = React.useState(
-    savedText ? savedText : '',
+    !savedText || savedText === -1 ? '' : savedText,
   )
 
   function handleTextInput(event: React.FormEvent<HTMLTextAreaElement>) {
@@ -32,7 +32,7 @@ const TextResponse = (props: Props) => {
       placeholder="Say something"
       aria-placeholder="Say something"
       aria-multiline="true"
-      value={responseText}
+      value={responseText?.toString()}
       onChange={handleTextInput}
       required
       autoFocus
