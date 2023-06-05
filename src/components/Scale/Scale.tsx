@@ -7,6 +7,7 @@ type Props = {
   selectedScore?: number
   onSelectScore?: (score: Response) => void
   viewOnly?: boolean
+  displayScore?: boolean
 }
 
 const Scale = (props: Props) => {
@@ -15,6 +16,7 @@ const Scale = (props: Props) => {
     onSelectScore,
     selectedScore,
     viewOnly = false,
+    displayScore = false,
   } = props
   const [scoreHoverOn, setScoreHoverOn] = React.useState<number>(0)
   const [currentScore, setCurrentScore] = React.useState<number>(
@@ -88,7 +90,7 @@ const Scale = (props: Props) => {
       </div>
       <div className={styles.scoreDisplay}>
         <p>
-          {currentScore ? selectedScore : 0}/{maxValue}
+          {displayScore && `${currentScore ? selectedScore : 0}/${maxValue}`}
         </p>
       </div>
     </>
