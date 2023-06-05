@@ -14,3 +14,9 @@
   margin: 0rem 2px;
   cursor: pointer;
 }
+.scoreDisplay {
+  margin-top: var(--fs-sm);
+  display: flex;
+  justify-content: flex-end;
+ }
+
