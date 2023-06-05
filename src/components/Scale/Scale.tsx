@@ -55,36 +55,43 @@ const Scale = (props: Props) => {
   }
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: `repeat(${maxValue}, 1fr)`,
-        gap: '2px',
-      }}
-      onMouseLeave={handleMouseLeave}
-    >
-      {new Array(maxValue).fill(0).map((_, i) => (
-        <button
-          type="button"
-          id="setScore"
-          aria-label={(i + 1).toString()}
-          style={{
-            backgroundColor: `var(${backGroundColor(i + 1)})`,
-            border: `1px solid var(${backGroundColor(i + 1)})`,
-            width: `-webkit-fill-available`,
-            minWidth: '35px',
-          }}
-          onMouseOver={handleHover}
-          onClick={() => handleScoreSelect(i + 1)}
-          onKeyDown={(event) => handleEnterKeyPress(event, i + 1)}
-          value={i}
-          key={i + 1}
-          className={styles.box}
-          disabled={viewOnly}
-          tabIndex={0}
-        ></button>
-      ))}
-    </div>
+    <>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${maxValue}, 1fr)`,
+          gap: '2px',
+        }}
+        onMouseLeave={handleMouseLeave}
+      >
+        {new Array(maxValue).fill(0).map((_, i) => (
+          <button
+            type="button"
+            id="setScore"
+            aria-label={(i + 1).toString()}
+            style={{
+              backgroundColor: `var(${backGroundColor(i + 1)})`,
+              border: `1px solid var(${backGroundColor(i + 1)})`,
+              width: `-webkit-fill-available`,
+              minWidth: '35px',
+            }}
+            onMouseOver={handleHover}
+            onClick={() => handleScoreSelect(i + 1)}
+            onKeyDown={(event) => handleEnterKeyPress(event, i + 1)}
+            value={i}
+            key={i + 1}
+            className={styles.box}
+            disabled={viewOnly}
+            tabIndex={0}
+          ></button>
+        ))}
+      </div>
+      <div className={styles.scoreDisplay}>
+        <p>
+          {currentScore ? selectedScore : 0}/{maxValue}
+        </p>
+      </div>
+    </>
   )
 }
 
