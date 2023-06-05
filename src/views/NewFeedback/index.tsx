@@ -90,6 +90,7 @@ const NewFeedback = () => {
               {currentQuestion.type === 'scale' && (
                 <div className={styles.scaleInputContainer}>
                   <Scale
+                    displayScore={true}
                     selectedScore={Number(
                       answers[currentQuestionIndex]?.response?.answer,
                     )}
