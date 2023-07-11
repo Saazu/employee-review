@@ -1,9 +1,8 @@
-# Honesto - Frontend Practical Exercise
+# Frontend Exercise
 
-Honesto is an application allowing peers to leave feedback for other team members. For this exercise, you are to
+This is an application allowing peers to leave feedback for other team members. For this exercise, you are to
 implement the required tasks below, along with any bonus tasks you also have time to complete.
 
-Designs for all tasks are [available in Figma](https://www.figma.com/file/wo1GYucGjPE8naJM5DZ9K3/Practical---FE-Exercise---Honesto-1.3), please follow these designs for all tasks.
 
 All work should be done in PRs with thorough descriptions and no unrelated changes, merged to main (**no reviews are required**). Git usage is very important. For this exercise, we won't enforce any style, but we want to get a clear overview of your work just by looking at your commit history.
 
